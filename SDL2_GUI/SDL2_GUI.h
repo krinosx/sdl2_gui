@@ -1,0 +1,7 @@
+/*
+* Main Header file for SDL2_GUI library
+* It should be the only file you must worry about in your include directives
+*/
+
+#include "GUIComponent.h"
+#include "GUIManager.h"
