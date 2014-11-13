@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 20);
+	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 64);
 	if (arial == NULL)
 	{
 		std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
@@ -68,12 +68,22 @@ int main(int argc, char* argv[])
 
 
 	SDL_Color bg{ 255, 255, 0 };
+	SDL_Color bg1{ 255, 0, 0 };
+	SDL_Color border{ 255, 0, 255 };
+	
 
 	GUIManager manager;
-	GUIComponent testButton(10, 10, 300, 100);
-	testButton.setBackgroundColor(bg);
+	GUIComponent * testButton = new GUIComponent(10, 10, 300, 100);
+	GUILabel * testButton1 = new GUILabel(10,400,300,100, "Teste", arial,false);
+	
+	testButton->setBackgroundColor(bg);
+
+	testButton1->setBackgroundColor(bg1);
+	testButton1->setBorderColor(border);
+
 
 	manager.addComponent(testButton);
+	manager.addComponent(testButton1);
 
 
 	
@@ -96,6 +106,8 @@ int main(int argc, char* argv[])
 				mousePressed(sdlEvent);
 				break;
 			case SDL_MOUSEBUTTONUP:
+				manager.click(sdlEvent.button.x, sdlEvent.button.y);
+
 				mouseReleased(sdlEvent);
 				break;
 			default:
@@ -111,6 +123,9 @@ int main(int argc, char* argv[])
 		SDL_RenderPresent(sdlRenderer);
 
 	}
+
+	delete(testButton);
+	delete(testButton1);
 
 	TTF_CloseFont(arial);
 	TTF_Quit();
@@ -148,7 +163,10 @@ void draw(SDL_Renderer * renderer)
 void keyPressed(SDL_Event keyEvent){}
 void mousePressed(SDL_Event mouseEvent){}
 void keyReleased(SDL_Event keyEvent){}
-void mouseReleased(SDL_Event mouseEvent){}
+void mouseReleased(SDL_Event mouseEvent){
+
+
+}
 
 void checkSDLError(int line = -1)
 {

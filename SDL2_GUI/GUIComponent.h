@@ -6,7 +6,7 @@
 
 class GUIComponent
 {
-private:
+protected:
 	int x;
 	int y;
 	int w;
@@ -19,9 +19,9 @@ private:
 public:
 	GUIComponent(int posX, int posY, int width, int height);
 	~GUIComponent();
-	void draw(SDL_Renderer* renderer);
+	virtual void draw(SDL_Renderer* renderer);
 	bool isInside(int x, int y);
-	void performAction();
+	virtual void performAction();
 	void setBackgroundColor(SDL_Color backgroundColor);
 };
 

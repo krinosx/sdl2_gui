@@ -12,7 +12,7 @@ GUIManager::~GUIManager()
 }
 
 
-void GUIManager::addComponent(GUIComponent component)
+void GUIManager::addComponent(GUIComponent * component)
 {
 	this->componentList.push_back(component);
 }
@@ -20,11 +20,11 @@ void GUIManager::addComponent(GUIComponent component)
 
 void GUIManager::click(int x, int y)
 {
-	for (GUIComponent comp : this->componentList)
+	for (GUIComponent *comp : this->componentList)
 	{
-		if (comp.isInside(x, y))
+		if (comp->isInside(x, y))
 		{
-			comp.performAction();
+			comp->performAction();
 		}
 	}
 }
@@ -40,8 +40,8 @@ void GUIManager::keyPress(int keyCode)
 
 void GUIManager::draw(SDL_Renderer* renderer)
 {
-	for (GUIComponent component : this->componentList)
+	for (GUIComponent* component : this->componentList)
 	{
-		component.draw( renderer );
+		component->draw( renderer );
 	}
 }

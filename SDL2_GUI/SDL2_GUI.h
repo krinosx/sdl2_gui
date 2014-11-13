@@ -5,3 +5,4 @@
 
 #include "GUIComponent.h"
 #include "GUIManager.h"
+#include "GUILabel.h"

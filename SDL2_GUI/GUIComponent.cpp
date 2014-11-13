@@ -28,12 +28,13 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 
 bool GUIComponent::isInside(int x, int y)
 {
-	return false;
+	return((x > this->x) && (x <  (this->x + this->w)) && (y > this->y) && (y < (this->y + this->h)));
 }
 
 
 void GUIComponent::performAction()
 {
+	std::cout << "Component Clicked" << std::endl;
 }
 
 void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
