@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 64);
+	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 18);
 	if (arial == NULL)
 	{
 		std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
@@ -74,17 +74,22 @@ int main(int argc, char* argv[])
 
 	GUIManager manager;
 	GUIComponent * testButton = new GUIComponent(10, 10, 300, 100);
-	GUILabel * testButton1 = new GUILabel(10,400,300,100, "Teste", arial,false);
-	
 	testButton->setBackgroundColor(bg);
 
+	GUILabel * testButton1 = new GUILabel(10,400,200,50, "My Button", arial,false);
+	testButton1->setPadding(30, 30, 10, 10);
 	testButton1->setBackgroundColor(bg1);
 	testButton1->setBorderColor(border);
+
+	GUILabel * testButton2 = new GUILabel(10, 200, 300, 50, "Click me if you can.", arial, false);
+	//testButton2->setPadding(0, 0, 0, 0);
+	testButton2->setBackgroundColor(bg1);
+	testButton2->setBorderColor(border);
 
 
 	manager.addComponent(testButton);
 	manager.addComponent(testButton1);
-
+	manager.addComponent(testButton2);
 
 	
 	while (isAppRunning)

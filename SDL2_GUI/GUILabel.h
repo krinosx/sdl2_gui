@@ -15,7 +15,9 @@ private:
 	/* Texture to render the text*/
 	SDL_Texture * texture = NULL;
 	SDL_Rect labelRectangle;
-	
+protected:
+	int padLeft, padRight, padTop, padBottom;
+
 public:
 	GUILabel(int x, int y, int w, int h, std::string label, TTF_Font * font, bool border = false);
 	~GUILabel();
@@ -23,5 +25,6 @@ public:
 	void setBorderColor(SDL_Color color);
 	void draw(SDL_Renderer* renderer);
 	void performAction();
+	void setPadding(int left, int right, int top, int bottom);
 };
 
