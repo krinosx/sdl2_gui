@@ -68,7 +68,9 @@ int main(int argc, char* argv[])
 
 
 	SDL_Color bg{ 255, 255, 0 };
-	SDL_Color bg1{ 255, 0, 0 };
+	SDL_Color c_red{ 255, 0, 0 };
+	SDL_Color c_green{ 0, 255, 0 };
+	SDL_Color c_blue{ 0, 0, 255 };
 	SDL_Color border{ 255, 0, 255 };
 	
 
@@ -78,18 +80,20 @@ int main(int argc, char* argv[])
 
 	GUILabel * testButton1 = new GUILabel(10,400,200,50, "My Button", arial,false);
 	testButton1->setPadding(30, 30, 10, 10);
-	testButton1->setBackgroundColor(bg1);
+	testButton1->setBackgroundColor(c_red);
 	testButton1->setBorderColor(border);
-
-	GUILabel * testButton2 = new GUILabel(10, 200, 300, 50, "Click me if you can.", arial, false);
-	//testButton2->setPadding(0, 0, 0, 0);
-	testButton2->setBackgroundColor(bg1);
-	testButton2->setBorderColor(border);
-
+	testButton1->setAction([]{std::cout << "Label lambdas" << std::endl; });
+	
+	GUIButton * testButton3 = new GUIButton(10, 200, 300, 50, "Click and hold.", arial, false);
+	testButton3->setClickedColor(c_green);
+	testButton3->setBackgroundColor(c_blue);
+	testButton3->setBorderColor(border);
+	//set button action
+	testButton3->setAction([&]{std::cout << "My lambda expression" << std::endl; });
 
 	manager.addComponent(testButton);
 	manager.addComponent(testButton1);
-	manager.addComponent(testButton2);
+	manager.addComponent(testButton3);
 
 	
 	while (isAppRunning)
@@ -108,10 +112,11 @@ int main(int argc, char* argv[])
 				keyReleased(sdlEvent);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
+				manager.click(sdlEvent.button.x, sdlEvent.button.y);
 				mousePressed(sdlEvent);
 				break;
 			case SDL_MOUSEBUTTONUP:
-				manager.click(sdlEvent.button.x, sdlEvent.button.y);
+				manager.release(sdlEvent.button.x, sdlEvent.button.y);
 
 				mouseReleased(sdlEvent);
 				break;

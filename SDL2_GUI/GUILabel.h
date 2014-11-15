@@ -6,7 +6,7 @@
 class GUILabel :
 	public GUIComponent
 {
-private:
+protected:
 	std::string label;
 	SDL_Color labelColor;
 	SDL_Color borderColor;
@@ -15,8 +15,9 @@ private:
 	/* Texture to render the text*/
 	SDL_Texture * texture = NULL;
 	SDL_Rect labelRectangle;
-protected:
 	int padLeft, padRight, padTop, padBottom;
+	
+	void generateLabelTexture(SDL_Renderer *renderer);
 
 public:
 	GUILabel(int x, int y, int w, int h, std::string label, TTF_Font * font, bool border = false);
@@ -24,7 +25,8 @@ public:
 	void setLabelColor(SDL_Color color);
 	void setBorderColor(SDL_Color color);
 	void draw(SDL_Renderer* renderer);
-	void performAction();
+	
+	void release(int x, int y);
 	void setPadding(int left, int right, int top, int bottom);
 };
 

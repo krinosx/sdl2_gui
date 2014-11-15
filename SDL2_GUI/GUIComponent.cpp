@@ -6,6 +6,8 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->rectangle.w = width;
 	this->rectangle.x = x;
 	this->rectangle.y = y;
+
+	this->state = GUIComponentState::default;
 }; 
 
 
@@ -31,13 +33,20 @@ bool GUIComponent::isInside(int x, int y)
 	return((x > this->x) && (x <  (this->x + this->w)) && (y > this->y) && (y < (this->y + this->h)));
 }
 
-
-void GUIComponent::performAction()
-{
-	std::cout << "Component Clicked" << std::endl;
-}
-
 void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
 {
 	this->backgroundColor = backgroundColor;
+}
+
+void GUIComponent::setAction(std::function<void(void)> function)
+{
+	this->action = function;
+}
+
+void GUIComponent::performAction()
+{
+	if (this->action)
+	{
+		this->action();
+	}
 }
