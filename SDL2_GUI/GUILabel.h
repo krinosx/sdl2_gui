@@ -20,6 +20,7 @@ protected:
 	void generateLabelTexture(SDL_Renderer *renderer);
 
 public:
+	void setParent(GUIComponent * component);
 	GUILabel(int x, int y, int w, int h, std::string label, TTF_Font * font, bool border = false);
 	~GUILabel();
 	void setLabelColor(SDL_Color color);

@@ -86,6 +86,7 @@
     <ClCompile Include="GUILabel.cpp" />
     <ClCompile Include="GUIComponent.cpp" />
     <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="GUIPanel.cpp" />
     <ClCompile Include="SDL2_GUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="GUIComponentState.h" />
+    <ClInclude Include="GUIPanel.h" />
     <ClInclude Include="SDL2_GUI.h" />
   </ItemGroup>
   <ItemGroup>

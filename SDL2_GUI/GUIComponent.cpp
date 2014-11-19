@@ -8,6 +8,7 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->rectangle.y = y;
 
 	this->state = GUIComponentState::default;
+	this->parent = nullptr;
 }; 
 
 
@@ -22,6 +23,7 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 	
 	SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a );
+	
 	SDL_RenderFillRect(renderer, &this->rectangle);
 	
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -30,7 +32,7 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 
 bool GUIComponent::isInside(int x, int y)
 {
-	return((x > this->x) && (x <  (this->x + this->w)) && (y > this->y) && (y < (this->y + this->h)));
+	return((x > this->rectangle.x) && (x <  (this->rectangle.x + this->rectangle.w)) && (y > this->rectangle.y) && (y < (this->rectangle.y + this->rectangle.h)));
 }
 
 void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
@@ -48,5 +50,31 @@ void GUIComponent::performAction()
 	if (this->action)
 	{
 		this->action();
+	}
+}
+
+int GUIComponent::getParentX()
+{
+	return this->parent ? this->x + this->parent->getParentX() : this->x;
+}
+int GUIComponent::getParentY()
+{
+	return this->parent ? this->y + this->parent->getParentY() : this->y;
+}
+
+void GUIComponent::setParent(GUIComponent * parent)
+{
+	this->parent = parent;
+
+	if (parent)
+	{
+		// change rectangle position
+		this->rectangle.x = this->getParentX();
+		this->rectangle.y = this->getParentY();
+	}
+	else
+	{
+		this->rectangle.x = this->x;
+		this->rectangle.y = this->y;
 	}
 }

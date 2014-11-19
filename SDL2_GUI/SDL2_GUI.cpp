@@ -75,25 +75,47 @@ int main(int argc, char* argv[])
 	
 
 	GUIManager manager;
-	GUIComponent * testButton = new GUIComponent(10, 10, 300, 100);
-	testButton->setBackgroundColor(bg);
 
-	GUILabel * testButton1 = new GUILabel(10,400,200,50, "My Button", arial,false);
+
+	GUIPanel * mainPanel = new GUIPanel(100, 50, 500, 500);
+	mainPanel->setOpaque(true);
+	mainPanel->setBackgroundColor(bg);
+
+	GUIPanel * subPanel = new GUIPanel(10, 200, 400, 200);
+	subPanel->setOpaque(true);
+	subPanel->setBackgroundColor(c_blue);
+
+	GUILabel * testButton1 = new GUILabel(5 ,5, 200,50, "My Button", arial,false);
 	testButton1->setPadding(30, 30, 10, 10);
 	testButton1->setBackgroundColor(c_red);
 	testButton1->setBorderColor(border);
 	testButton1->setAction([]{std::cout << "Label lambdas" << std::endl; });
 	
-	GUIButton * testButton3 = new GUIButton(10, 200, 300, 50, "Click and hold.", arial, false);
+	
+	GUIButton * testButton3 = new GUIButton(20, 60, 200, 50, "Click and hold.", arial, false);
 	testButton3->setClickedColor(c_green);
 	testButton3->setBackgroundColor(c_blue);
 	testButton3->setBorderColor(border);
 	//set button action
 	testButton3->setAction([&]{std::cout << "My lambda expression" << std::endl; });
 
-	manager.addComponent(testButton);
-	manager.addComponent(testButton1);
-	manager.addComponent(testButton3);
+
+	GUIButton * testButton4 = new GUIButton(10, 1, 200, 50, "BTN SUBPANEL.", arial, false);
+	testButton4->setClickedColor(c_green);
+	testButton4->setBackgroundColor(c_blue);
+	testButton4->setBorderColor(border);
+	//set button action
+	testButton4->setAction([&]{std::cout << "Btn4 Clicked" << std::endl; });
+
+	 mainPanel->addComponent(testButton1);
+	mainPanel->addComponent(testButton3);
+	
+	
+	mainPanel->addComponent(subPanel);
+	subPanel->addComponent(testButton4);
+
+	manager.addComponent(mainPanel);
+
 
 	
 	while (isAppRunning)
@@ -134,8 +156,9 @@ int main(int argc, char* argv[])
 
 	}
 
-	delete(testButton);
+
 	delete(testButton1);
+	delete(testButton3);
 
 	TTF_CloseFont(arial);
 	TTF_Quit();

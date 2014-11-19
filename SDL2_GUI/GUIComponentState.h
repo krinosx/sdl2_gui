@@ -1,0 +1,1 @@
+enum class GUIComponentState { default, pressed, released };

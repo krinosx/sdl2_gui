@@ -6,3 +6,4 @@
 #include "GUIManager.h"
 #include "GUILabel.h"
 #include "GUIButton.h"
+#include "GUIPanel.h"

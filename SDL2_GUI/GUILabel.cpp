@@ -30,8 +30,8 @@ void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
 	int textureWidth, textureHeight;
 	SDL_QueryTexture(this->texture, NULL, NULL, &textureWidth, &textureHeight);
 
-	this->labelRectangle.x = this->x + this->padLeft;
-	this->labelRectangle.y = this->y + this->padTop;
+	this->labelRectangle.x = this->rectangle.x + this->padLeft;
+	this->labelRectangle.y = this->rectangle.y + this->padTop;
 
 	// If label size + padding greather than entire button, resize label to fit in original size
 	if (textureWidth + this->padLeft + this->padRight > this->rectangle.w)
@@ -58,7 +58,7 @@ void GUILabel::draw(SDL_Renderer *renderer)
 	/* If its the first time rendering, create the label texture. 
 	 * If the Label value is changed, the this->texture must be set to NULL
 	 */
-	if (this->texture == NULL)
+	if (this->texture == nullptr)
 	{
 		generateLabelTexture(renderer);
 	}
@@ -105,4 +105,10 @@ void GUILabel::setPadding(int left, int right, int top, int bottom)
 	this->padRight = right;
 	this->padTop = top;
 	this->padBottom = bottom;
+}
+
+void GUILabel::setParent(GUIComponent * parent)
+{
+	GUIComponent::setParent(parent);
+	this->texture = nullptr;
 }
