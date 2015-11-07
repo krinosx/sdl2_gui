@@ -11,6 +11,15 @@ GUIManager::~GUIManager()
 	this->componentList.clear();
 }
 
+/* Clear all resources */
+void GUIManager::destroy()
+{
+	for (GUIComponent *component : this->componentList ) 
+	{
+		delete(component);
+	}
+	this->componentList.clear();
+}
 
 void GUIManager::addComponent(GUIComponent * component)
 {
@@ -40,14 +49,14 @@ void GUIManager::release(int x, int y){
 }
 
 
-void GUIManager::keyPress(int keyCode)
+void GUIManager::keyPress(SDL_Keysym key)
 {
 	// handle key press events.... 
 	// its posible to add a "shortcut key" here to access the components
 	// or event handle events to open specific components, like menus
 }
 
-void GUIManager::keyRelease(int keyCode)
+void GUIManager::keyRelease(SDL_Keysym key)
 {
 	// handle key press events.... 
 	// its posible to add a "shortcut key" here to access the components

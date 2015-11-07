@@ -1,6 +1,5 @@
 #pragma once
 #include "GUIComponent.h"
-#include <SDL2_ttf/SDL_ttf.h>
 #include <string>
 
 class GUILabel :

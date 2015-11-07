@@ -3,6 +3,10 @@
 
 GUIPanel::~GUIPanel()
 {
+	for (GUIComponent * component : this->childs){
+		delete(component);
+	}
+
 }
 
 void GUIPanel::addComponent(GUIComponent * component)

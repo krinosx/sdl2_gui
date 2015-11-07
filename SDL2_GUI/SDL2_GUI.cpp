@@ -1,4 +1,5 @@
-// SDL2_GUI.cpp : Defines the entry point for the console application.
+// Component Showcase and demo application for SDL2_GUI lib.
+
 //
 #include <iostream>
 
@@ -6,19 +7,17 @@
     #include <SDL2/SDL.h>
     #include <SDL2_image/SDL_image.h>
     #include <SDL2_ttf/SDL_ttf.h>
+	#define FONT_LOCATION "/Library/Fonts/Arial.ttf"
 #elif defined _WIN32 || _WIN64
     #include <SDL.h>
     #include <SDL_ttf.h>
     #include <SDL_image.h>
+	#define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
 #endif
 
 
 #include <memory>
 #include "SDL2_GUI.h"
-
-// TODO: Use a relative path or read it from a config file
-//#define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
-#define FONT_LOCATION "/Library/Fonts/Arial.ttf"
 
 
 void checkSDLError(int);
@@ -33,7 +32,9 @@ int main(int argc, char* argv[])
 {
 	
 	bool isAppRunning = true;
-
+	/*
+	* Initializing SDL components and libraries
+	*/
 	SDL_Window * mainWindow;
 	SDL_Renderer * sdlRenderer;
 	SDL_Event sdlEvent;
@@ -67,7 +68,7 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 
-
+	/* Loading default font - Arial */
 	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 18);
 	if (arial == NULL)
 	{
@@ -78,13 +79,18 @@ int main(int argc, char* argv[])
 	}
 
 
+	/*
+	* SDL2_GUI code
+	*/
+
+	/* Creating some basic color to our components */
 	SDL_Color bg{ 255, 255, 0 };
 	SDL_Color c_red{ 255, 0, 0 };
 	SDL_Color c_green{ 0, 255, 0 };
 	SDL_Color c_blue{ 0, 0, 255 };
 	SDL_Color border{ 255, 0, 255 };
 	
-
+	/* Main SDL2_GUI object. All components will be childs of GUIManager */
 	GUIManager manager;
 
 
@@ -110,7 +116,6 @@ int main(int argc, char* argv[])
 	//set button action
 	testButton3->setAction([&]{std::cout << "My lambda expression" << std::endl; });
 
-
 	GUIButton * testButton4 = new GUIButton(10, 1, 200, 50, "BTN SUBPANEL.", arial, false);
 	testButton4->setClickedColor(c_green);
 	testButton4->setBackgroundColor(c_blue);
@@ -118,7 +123,7 @@ int main(int argc, char* argv[])
 	//set button action
 	testButton4->setAction([&]{std::cout << "Btn4 Clicked" << std::endl; });
 
-	 mainPanel->addComponent(testButton1);
+	mainPanel->addComponent(testButton1);
 	mainPanel->addComponent(testButton3);
 	
 	
@@ -139,12 +144,15 @@ int main(int argc, char* argv[])
 				isAppRunning = false;
 				break;
 			case SDL_KEYDOWN:
+				manager.keyPress(sdlEvent.key.keysym);
 				keyPressed(sdlEvent);
 				break;
 			case SDL_KEYUP:
+				manager.keyRelease(sdlEvent.key.keysym);
 				keyReleased(sdlEvent);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
+				/* Dispatch the events for GUIManager */
 				manager.click(sdlEvent.button.x, sdlEvent.button.y);
 				mousePressed(sdlEvent);
 				break;
@@ -160,16 +168,21 @@ int main(int argc, char* argv[])
 		}
 
 		SDL_RenderClear(sdlRenderer);
-		// Draw Stuff
+
+		/*
+		* Draw the GUIManager as last component if you wish
+		* it to be displayed at top of other rendering
+		*/
 		manager.draw(sdlRenderer);
-		//draw(sdlRenderer);
+		
 		SDL_RenderPresent(sdlRenderer);
 
 	}
 
 
-	delete(testButton1);
-	delete(testButton3);
+	//delete(testButton1);
+	//delete(testButton3);
+	manager.destroy();
 
 	TTF_CloseFont(arial);
 	TTF_Quit();
@@ -182,25 +195,6 @@ int main(int argc, char* argv[])
 
 	
 	return 0;
-}
-
-
-void draw(SDL_Renderer * renderer)
-{
-
-	const SDL_Rect screenBackground{ 0, 0, 800, 600 };
-	
-	const SDL_Rect screenDetail{ 100, 100, 400, 300 };
-
-
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &screenBackground );
-		
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderFillRect(renderer, &screenDetail);
-
-
-
 }
 
 

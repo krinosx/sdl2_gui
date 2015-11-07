@@ -17,7 +17,12 @@ GUIComponent(x, y, w, h), label(label), drawBorder(border), font(font)
 
 GUILabel::~GUILabel()
 {
-	
+	if (this->texture != nullptr){
+		SDL_DestroyTexture(this->texture);
+	}
+
+	// We do not destroy the font pointer because 
+	// we are not pointer owners.
 }
 
 void GUILabel::generateLabelTexture(SDL_Renderer *renderer)

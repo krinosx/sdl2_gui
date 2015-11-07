@@ -44,7 +44,7 @@ protected:
 public:
 	
 	GUIComponent(int posX, int posY, int width, int height);
-	~GUIComponent();
+	virtual ~GUIComponent();
 	const GUIComponentState getState() { return this->state; }
 	void setBackgroundColor(SDL_Color backgroundColor);
 

@@ -9,6 +9,11 @@ GUIButton::GUIButton(int x, int y, int w, int h, std::string label, TTF_Font * f
 
 GUIButton::~GUIButton()
 {
+	if (this->clickedTexture != nullptr)
+	{
+		SDL_DestroyTexture(this->clickedTexture);
+	}
+
 }
 
 void GUIButton::generateClickedTexture(SDL_Renderer * renderer)
