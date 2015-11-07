@@ -1,8 +1,18 @@
 #pragma once
 #include <string>
 #include <iostream>
+
+
+#ifdef __APPLE__
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#elif defined _WIN32 || _WIN64
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
+#endif
+
 #include "GUIComponentState.h"
 #include <functional>
 class GUIComponent
@@ -25,7 +35,7 @@ protected:
 
 
 	// internal use
-	GUIComponentState state = GUIComponentState::default;
+	GUIComponentState state = GUIComponentState::base;
 
 	// actions
 	std::function<void(void)> action;

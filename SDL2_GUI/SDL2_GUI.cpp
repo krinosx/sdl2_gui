@@ -1,14 +1,25 @@
 // SDL2_GUI.cpp : Defines the entry point for the console application.
 //
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+
+#ifdef __APPLE__
+    #include <SDL2/SDL.h>
+    #include <SDL2_image/SDL_image.h>
+    #include <SDL2_ttf/SDL_ttf.h>
+#elif defined _WIN32 || _WIN64
+    #include <SDL.h>
+    #include <SDL_ttf.h>
+    #include <SDL_image.h>
+#endif
+
+
 #include <memory>
 #include "SDL2_GUI.h"
 
+// TODO: Use a relative path or read it from a config file
+//#define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
+#define FONT_LOCATION "/Library/Fonts/Arial.ttf"
 
-#define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
 
 void checkSDLError(int);
 void keyPressed(SDL_Event keyEvent);

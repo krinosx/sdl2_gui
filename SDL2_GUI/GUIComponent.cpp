@@ -7,7 +7,7 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->rectangle.x = x;
 	this->rectangle.y = y;
 
-	this->state = GUIComponentState::default;
+	this->state = GUIComponentState::base;
 	this->parent = nullptr;
 }; 
 

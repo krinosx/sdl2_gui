@@ -63,7 +63,7 @@ void GUIButton::draw(SDL_Renderer *renderer)
 	Uint8 r, g, b, a;
 	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
-	if (this->state == GUIComponentState:: default)
+	if (this->state == GUIComponentState::base)
 	{
 		SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
 		SDL_RenderFillRect(renderer, &this->rectangle);
@@ -93,7 +93,7 @@ void GUIButton::click(int x, int y)
 }
 void GUIButton::release(int x, int y)
 {
-	this->state = GUIComponentState::default;
+	this->state = GUIComponentState::base;
 	
 	this->performAction();
 }
