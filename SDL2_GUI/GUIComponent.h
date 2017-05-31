@@ -1,3 +1,4 @@
+
 #pragma once
 #include <string>
 #include <iostream>
@@ -15,6 +16,17 @@
 
 #include "GUIComponentState.h"
 #include <functional>
+/**
+Base class for all components. This class stores basic information about positioning,
+rendering, states and hold a pointer for a function to be executed when the component
+is clicked.
+
+This class also holds a pointer to another GUIComponent (parent) used to define component
+hierarchy
+
+@author Giuliano Bortolassi
+
+*/
 class GUIComponent
 {
 
@@ -31,6 +43,7 @@ protected:
 	
 	SDL_Rect rectangle;
 	SDL_Color backgroundColor;
+	SDL_Texture *backgroundImage;
 	GUIComponent * parent;
 
 
@@ -47,6 +60,7 @@ public:
 	virtual ~GUIComponent();
 	const GUIComponentState getState() { return this->state; }
 	void setBackgroundColor(SDL_Color backgroundColor);
+	void setBackgroundImage(SDL_Texture *backgroundImage);
 
 	virtual void draw(SDL_Renderer* renderer);
 	bool isInside(int x, int y);

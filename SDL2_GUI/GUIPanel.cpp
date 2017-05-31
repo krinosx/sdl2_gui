@@ -30,7 +30,11 @@ void GUIPanel::draw(SDL_Renderer * renderer)
 		comp->draw(renderer);
 	}
 }
-
+/*
+	If set to opaque = true the background will be rendered. If it is set to 
+	false the component will not be rendered and will be used only as a positional
+	component.
+*/
 void GUIPanel::setOpaque(bool opaque) 
 { 
 	this->opaque = opaque;

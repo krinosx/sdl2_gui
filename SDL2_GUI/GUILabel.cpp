@@ -24,7 +24,10 @@ GUILabel::~GUILabel()
 	// We do not destroy the font pointer because 
 	// we are not pointer owners.
 }
+/**
+	Generate a texture to print based on current text and label atributes.
 
+*/
 void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
 {
 

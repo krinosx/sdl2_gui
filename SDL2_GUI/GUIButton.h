@@ -1,6 +1,21 @@
+/**
+A GUILabel specialization. A button is basically a label with fancy functions. The button is
+intented to be clicked so it have some click related functions and attributes.
+
+attributes
+clickedColor	-> Define a color to replace the background color when a button is clicked,
+return to default color when the mouse is released
+
+clickedTexture	-> Same logic as clickedColor
+
+functions
+click(x,y)		-> Send a click event to a component in the given coordinates
+
+release(x,y)	-> Send a release event to a component in the given coordinates.
+The actions related to its component is executed on release events.
+*/
 #pragma once
 #include "GUILabel.h"
-
 class GUIButton :
 	public GUILabel
 {

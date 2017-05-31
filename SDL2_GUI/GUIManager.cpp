@@ -26,7 +26,11 @@ void GUIManager::addComponent(GUIComponent * component)
 	this->componentList.push_back(component);
 }
 
+/**
+	Check component boundary and send the click event for the 
+	matching components
 
+*/
 void GUIManager::click(int x, int y)
 {
 	for (GUIComponent *comp : this->componentList)
@@ -38,6 +42,12 @@ void GUIManager::click(int x, int y)
 	}
 }
 
+
+/**
+	Check component boundary and send the release event for the
+	matching component
+
+*/
 void GUIManager::release(int x, int y){
 	for (GUIComponent *comp : this->componentList)
 	{

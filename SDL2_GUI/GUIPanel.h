@@ -1,7 +1,11 @@
 #pragma once
 #include "GUIComponent.h"
 #include <vector>
+/**
+	A component to be used as a container for other components. The main use 
+	for this one is to help the positioning of child components.
 
+*/
 class GUIPanel : public GUIComponent
 {
 private:

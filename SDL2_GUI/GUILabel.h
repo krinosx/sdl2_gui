@@ -1,7 +1,11 @@
 #pragma once
 #include "GUIComponent.h"
 #include <string>
+/**
+This class is a specialization of GUIComponent. THe intent of it is to enable the
+text drawing and border drawing.
 
+*/
 class GUILabel :
 	public GUIComponent
 {
@@ -11,9 +15,11 @@ protected:
 	SDL_Color borderColor;
 	bool drawBorder;
 	TTF_Font * font = NULL;
-	/* Texture to render the text*/
+	/** Texture to render the text */
 	SDL_Texture * texture = NULL;
 	SDL_Rect labelRectangle;
+	
+	/** Distance from Left/Right/Top/Bottom in pixels to draw the text */
 	int padLeft, padRight, padTop, padBottom;
 	
 	void generateLabelTexture(SDL_Renderer *renderer);

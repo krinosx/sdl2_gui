@@ -97,6 +97,8 @@ int main(int argc, char* argv[])
 	GUIPanel * mainPanel = new GUIPanel(100, 50, 500, 500);
 	mainPanel->setOpaque(true);
 	mainPanel->setBackgroundColor(bg);
+	
+
 
 	GUIPanel * subPanel = new GUIPanel(10, 200, 400, 200);
 	subPanel->setOpaque(true);

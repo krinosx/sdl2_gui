@@ -9,6 +9,8 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 
 	this->state = GUIComponentState::base;
 	this->parent = nullptr;
+	this->backgroundImage = nullptr;
+
 }; 
 
 
@@ -25,6 +27,12 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a );
 	
 	SDL_RenderFillRect(renderer, &this->rectangle);
+
+	/* If backgroundImage is not null*/
+	if (this->backgroundImage)
+	{
+		SDL_RenderCopy(renderer, this->backgroundImage, &this->rectangle, &this->rectangle);
+	}
 	
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
@@ -38,6 +46,10 @@ bool GUIComponent::isInside(int x, int y)
 void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
 {
 	this->backgroundColor = backgroundColor;
+}
+
+void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage) {
+	this->backgroundImage = backgroundImage;
 }
 
 void GUIComponent::setAction(std::function<void(void)> function)

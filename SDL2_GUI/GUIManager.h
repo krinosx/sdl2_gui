@@ -1,7 +1,11 @@
 #pragma once
 #include "GUIComponent.h"
 #include <vector>
-
+/*
+	Core class for the API: This class will be instantiated and all components 
+	will be attached to it. It will manage the correct rendering and event dispatching
+	to the child coponents.
+*/
 class GUIManager
 {
 public:
