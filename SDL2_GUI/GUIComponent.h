@@ -61,6 +61,7 @@ public:
 	const GUIComponentState getState() { return this->state; }
 	void setBackgroundColor(SDL_Color backgroundColor);
 	void setBackgroundImage(SDL_Texture *backgroundImage);
+	void setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha);
 
 	virtual void draw(SDL_Renderer* renderer);
 	bool isInside(int x, int y);

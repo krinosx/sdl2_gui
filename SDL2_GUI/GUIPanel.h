@@ -16,8 +16,8 @@ protected:
 	void setParent(GUIComponent * parent);
 
 public:
-	GUIPanel() : GUIComponent(0, 0, 0, 0){};
-	GUIPanel(int x, int y, int w, int h) : GUIComponent(x, y, w, h){};
+	GUIPanel();
+	GUIPanel(int x, int y, int w, int h);
 	~GUIPanel();
 	void addComponent(GUIComponent * component);
 	void draw(SDL_Renderer * renderer);

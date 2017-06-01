@@ -7,6 +7,7 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->rectangle.x = x;
 	this->rectangle.y = y;
 
+	this->backgroundColor = SDL_Color{ 0, 0, 0, 255 };
 	this->state = GUIComponentState::base;
 	this->parent = nullptr;
 	this->backgroundImage = nullptr;
@@ -31,6 +32,7 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 	/* If backgroundImage is not null*/
 	if (this->backgroundImage)
 	{
+
 		SDL_RenderCopy(renderer, this->backgroundImage, &this->rectangle, &this->rectangle);
 	}
 	
@@ -49,8 +51,17 @@ void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
 }
 
 void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage) {
+	this->setBackgroundImage(backgroundImage, 255);
+}
+
+void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha) {
+	if (alpha < 255 && alpha >= 0 ) {
+		SDL_SetTextureBlendMode(backgroundImage, SDL_BLENDMODE_BLEND);
+		SDL_SetTextureAlphaMod(backgroundImage, alpha);
+	}
 	this->backgroundImage = backgroundImage;
 }
+
 
 void GUIComponent::setAction(std::function<void(void)> function)
 {

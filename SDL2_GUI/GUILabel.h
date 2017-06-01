@@ -23,6 +23,7 @@ protected:
 	int padLeft, padRight, padTop, padBottom;
 	
 	void generateLabelTexture(SDL_Renderer *renderer);
+	SDL_Texture* generateTextTexture(SDL_Renderer * renderer, const char *text);
 
 public:
 	void setParent(GUIComponent * component);

@@ -51,6 +51,10 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 	
+	if (IMG_Init(IMG_INIT_JPG) != (int) IMG_INIT_JPG ) {
+		std::cout << "Unable to init Image Library: " << IMG_GetError() << std::endl;
+	}
+
 	mainWindow = SDL_CreateWindow("SDL2_GUI", 10, 10, 800, 600, SDL_WINDOW_SHOWN);
 
 	if (mainWindow == NULL)
@@ -67,6 +71,9 @@ int main(int argc, char* argv[])
 		SDL_DestroyWindow(mainWindow);
 		exit(-1);
 	}
+	/* Set the render to draw transparency*/
+	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
+
 
 	/* Loading default font - Arial */
 	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 18);
@@ -79,16 +86,29 @@ int main(int argc, char* argv[])
 	}
 
 
+	/* Load Images*/
+	SDL_Surface *backgroundSurface = nullptr;
+	backgroundSurface = IMG_Load("E:\\Projetos\\assets\\map2.jpg");
+	if (!backgroundSurface)
+	{
+		std::cout << "IMG_Load error - Error loading map2.jpg : " << IMG_GetError() << std::endl;
+	}
+
+	SDL_Texture* backgroundImage = SDL_CreateTextureFromSurface(sdlRenderer, backgroundSurface);
+
+	SDL_FreeSurface(backgroundSurface);
 	/*
 	* SDL2_GUI code
 	*/
 
+	
+
 	/* Creating some basic color to our components */
-	SDL_Color bg{ 255, 255, 0 };
-	SDL_Color c_red{ 255, 0, 0 };
-	SDL_Color c_green{ 0, 255, 0 };
-	SDL_Color c_blue{ 0, 0, 255 };
-	SDL_Color border{ 255, 0, 255 };
+	SDL_Color bg{ 255, 255, 0, 125 };
+	SDL_Color c_red{ 255, 0, 0, 125 };
+	SDL_Color c_green{ 0, 255, 0, 125 };
+	SDL_Color c_blue{ 0, 0, 255, 125 };
+	SDL_Color border{ 255, 0, 255, 125 };
 	
 	/* Main SDL2_GUI object. All components will be childs of GUIManager */
 	GUIManager manager;
@@ -96,7 +116,8 @@ int main(int argc, char* argv[])
 
 	GUIPanel * mainPanel = new GUIPanel(100, 50, 500, 500);
 	mainPanel->setOpaque(true);
-	mainPanel->setBackgroundColor(bg);
+	//mainPanel->setBackgroundColor(bg);
+	mainPanel->setBackgroundImage(backgroundImage, 200);
 	
 
 
@@ -104,7 +125,7 @@ int main(int argc, char* argv[])
 	subPanel->setOpaque(true);
 	subPanel->setBackgroundColor(c_blue);
 
-	GUILabel * testButton1 = new GUILabel(5 ,5, 200,50, "My Button", arial,false);
+	GUILabel * testButton1 = new GUILabel(5 ,5, 200, 50, "My Button", arial,false);
 	testButton1->setPadding(30, 30, 10, 10);
 	testButton1->setBackgroundColor(c_red);
 	testButton1->setBorderColor(border);
@@ -185,6 +206,8 @@ int main(int argc, char* argv[])
 	//delete(testButton1);
 	//delete(testButton3);
 	manager.destroy();
+
+	IMG_Quit();
 
 	TTF_CloseFont(arial);
 	TTF_Quit();

@@ -18,10 +18,8 @@ GUIButton::~GUIButton()
 
 void GUIButton::generateClickedTexture(SDL_Renderer * renderer)
 {
-	SDL_Surface * textureSurface = TTF_RenderText_Shaded(this->font, this->label.c_str(), this->labelColor, this->clickedColor);
-	this->clickedTexture = SDL_CreateTextureFromSurface(renderer, textureSurface);
-	SDL_FreeSurface(textureSurface);
-
+	this->clickedTexture = this->generateTextTexture(renderer, this->label.c_str());
+	
 	int textureWidth, textureHeight;
 	SDL_QueryTexture(this->clickedTexture, NULL, NULL, &textureWidth, &textureHeight);
 

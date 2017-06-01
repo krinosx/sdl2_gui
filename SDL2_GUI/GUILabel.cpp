@@ -24,6 +24,37 @@ GUILabel::~GUILabel()
 	// We do not destroy the font pointer because 
 	// we are not pointer owners.
 }
+
+
+SDL_Texture* GUILabel::generateTextTexture(SDL_Renderer * renderer, const char *text)
+{
+
+	SDL_BlendMode * blendMode = new SDL_BlendMode; // Allocate memory for the pointer.
+												   // recover the blend mode from the given render
+	if (SDL_GetRenderDrawBlendMode(renderer, blendMode))
+	{
+		*blendMode = SDL_BLENDMODE_BLEND;
+	}
+
+	SDL_Surface * textureSurface = nullptr;
+	if (*blendMode != SDL_BLENDMODE_BLEND)
+	{
+		textureSurface = TTF_RenderText_Shaded(this->font, text, this->labelColor, this->backgroundColor);
+	}
+	else {
+		textureSurface = TTF_RenderText_Blended(this->font, text, this->labelColor);
+	}
+
+	delete(blendMode); // Delete the useless pointer
+
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, textureSurface);
+	
+	SDL_FreeSurface(textureSurface);
+	
+	return texture;
+
+}
+
 /**
 	Generate a texture to print based on current text and label atributes.
 
@@ -31,9 +62,8 @@ GUILabel::~GUILabel()
 void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
 {
 
-	SDL_Surface * textureSurface = TTF_RenderText_Shaded(this->font, this->label.c_str(), this->labelColor, this->backgroundColor);
-	this->texture = SDL_CreateTextureFromSurface(renderer, textureSurface);
-	SDL_FreeSurface(textureSurface);
+	this->texture = this->generateTextTexture(renderer, this->label.c_str());
+	
 
 	int textureWidth, textureHeight;
 	SDL_QueryTexture(this->texture, NULL, NULL, &textureWidth, &textureHeight);

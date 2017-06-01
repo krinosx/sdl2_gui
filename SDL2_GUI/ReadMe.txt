@@ -1,40 +1,69 @@
 ========================================================================
-    CONSOLE APPLICATION : SDL2_GUI Project Overview
+    SDL_GUI 
 ========================================================================
 
-AppWizard has created this SDL2_GUI application for you.
+This project will build an simple framework to be used with SDL2. The main 
+purpose is to provide simple GUI functionalities like Buttons, Labels, 
+Pannels, TextAreas to be used with SDL applications.
 
-This file contains a summary of what you will find in each of the files that
-make up your SDL2_GUI application.
+Motivation: 
+	The initial motivation emerge from the lack of native libraries that 
+	support such components with SDL. Various alternatives are available
+	in the market/open source community like GTK, QT and others, but all
+	this frameworks add so much complexity and have so much features that
+	a simple project will not use.
+
+Goals:
+	The main gola is to provide a simple to learn and easy to integrate 
+	framework to SDL projects. The basic workflow to use the SDL_GUI will
+	be ass simple as (not the extra steps marked with *, all the other 
+	stuff is basic from general SDL applications):
+
+	------------- PSEUDOCODE ----------------------------------
+	
+	- INIT SDL LIBRARIES
+	- CREATE YOUR RENDER
+	(...)
+	  Initialize and load your project stuff
+	(...)
+
+	* CREATE GUI MANAGER
+	* CREATE GUI COMPONENTS
+	* ADD GUI COMPONENTS TO THE MANAGER
+
+	
+	- START APPLICATION LOOP 
+		- START SDL EVENT LOOP
+			* Notify manager with desired events
+
+		- Draw your project stuff
+		* Draw manager -> ( GUIManager.draw(renderer) )
+	
+	- END Application loop
+
+	* DESTROY MANAGER
+	- DESTROY YOUR PROJECT STUFF
+
+	- FINALIZE SDL
+	------------- PSEUDOCODE END  ----------------------------
 
 
-SDL2_GUI.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
 
-SDL2_GUI.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
 
-SDL2_GUI.cpp
-    This is the main application source file.
+*****************
+***** TODO  *****
+*****************
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
 
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named SDL2_GUI.pch and a precompiled types file named StdAfx.obj.
+FIX and IMPROVE
+	+ Implement the BLEND mode while creating surfaces for text in Labels/Buttons/etc
+		* implemented blend mode for text and background color in all components based in Label
+		* Implemented blend for background image for all GUIComponents ( add a new function void setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha); )
 
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
 
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
+NEW FEATURES
+	- Implement TextArea component ( to show long texts ) - Combine the Panel with a kind of label maybe?
+	- Implement TextField component ( to enable input text )
+	- Implement scrollbars
+	- Implement Scroll Panels (a panel with scrollbars)
 
-/////////////////////////////////////////////////////////////////////////////

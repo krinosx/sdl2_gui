@@ -1,6 +1,14 @@
 #include "GUIPanel.h"
 
 
+GUIPanel::GUIPanel() : GUIComponent(0, 0, 0, 0) {
+
+};
+
+GUIPanel::GUIPanel(int x, int y, int w, int h) : GUIComponent(x, y, w, h) {
+
+};
+
 GUIPanel::~GUIPanel()
 {
 	for (GUIComponent * component : this->childs){
