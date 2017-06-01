@@ -13,6 +13,8 @@ GUIComponent(x, y, w, h), label(label), drawBorder(border), font(font)
 	this->padRight = 0;
 	this->padTop = 0;
 	this->padBottom = 0;
+
+	this->backgroundImage = nullptr;
 }
 
 GUILabel::~GUILabel()
@@ -55,13 +57,60 @@ SDL_Texture* GUILabel::generateTextTexture(SDL_Renderer * renderer, const char *
 
 }
 
+void GUILabel::drawBackground(SDL_Renderer * renderer)
+{
+	this->drawBackground(renderer, this->backgroundColor);
+}
+
+void GUILabel::drawBackgroundImage( SDL_Renderer * renderer, SDL_Texture * backgroundImage, SDL_Rect *imageRect ) {
+	if (backgroundImage)
+	{
+		SDL_RenderCopy(renderer, backgroundImage, imageRect, &this->rectangle);
+	}
+}
+void GUILabel::drawBackground(SDL_Renderer * renderer, SDL_Color color)
+{
+	if (this->drawBgColor) {
+		Uint8 r, g, b, a;
+		SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+
+		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(renderer, &this->rectangle);
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	}
+}
+
+void GUILabel::drawBorders(SDL_Renderer * renderer, SDL_Color borderColor)
+{
+	if (this->drawBorder) {
+		Uint8 r, g, b, a;
+		SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+
+		SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+		SDL_RenderDrawRect(renderer, &this->rectangle);
+
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	}
+}
+
+
+void GUILabel::drawBorders(SDL_Renderer * renderer)
+{
+	this->drawBorders(renderer, this->borderColor);
+}
+
 /**
 	Generate a texture to print based on current text and label atributes.
 
 */
 void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
 {
-
+	// Clear texture if it already exists to free memory.
+	if (this->texture)
+	{
+		SDL_DestroyTexture(this->texture);
+	}
+	// Generate a new texture (and allocate memory for it)
 	this->texture = this->generateTextTexture(renderer, this->label.c_str());
 	
 
@@ -106,20 +155,12 @@ void GUILabel::draw(SDL_Renderer *renderer)
 		2 - Draw the label
 		3 - Draw the border
 	*/
-	Uint8 r, g, b, a;
-	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-
-	SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
-	SDL_RenderFillRect(renderer, &this->rectangle);
+	this->drawBackground(renderer);
 
 	// Draw the texture Label
 	SDL_RenderCopy(renderer, this->texture, NULL, &this->labelRectangle);
 	
-	// Draw the border
-	SDL_SetRenderDrawColor(renderer, this->borderColor.r, this->borderColor.g, this->borderColor.b, this->borderColor.a);
-	SDL_RenderDrawRect(renderer, &this->rectangle);
-	
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	this->drawBorders(renderer);
 }
 
 void GUILabel::setBorderColor(SDL_Color color)

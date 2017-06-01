@@ -11,19 +11,28 @@ class GUILabel :
 {
 protected:
 	std::string label;
-	SDL_Color labelColor;
-	SDL_Color borderColor;
-	bool drawBorder;
+	SDL_Color labelColor = { 0,0,0,0 };
+	SDL_Color borderColor = { 0,0,0,0 };
+	bool drawBorder = false;
 	TTF_Font * font = NULL;
 	/** Texture to render the text */
 	SDL_Texture * texture = NULL;
-	SDL_Rect labelRectangle;
+	SDL_Rect labelRectangle = { 0,0,0,0 };
 	
 	/** Distance from Left/Right/Top/Bottom in pixels to draw the text */
-	int padLeft, padRight, padTop, padBottom;
+	int padLeft, padRight, padTop, padBottom = 0;
 	
 	void generateLabelTexture(SDL_Renderer *renderer);
 	SDL_Texture* generateTextTexture(SDL_Renderer * renderer, const char *text);
+
+	// Draw functions
+	void drawBackground(SDL_Renderer * renderer);
+	void drawBackgroundImage(SDL_Renderer * renderer, SDL_Texture *backgroundImage, SDL_Rect *imageRect);
+	void drawBackground(SDL_Renderer * renderer, SDL_Color color);
+	void drawBorders(SDL_Renderer * renderer, SDL_Color borderColor);
+	void drawBorders(SDL_Renderer * renderer);
+
+
 
 public:
 	void setParent(GUIComponent * component);

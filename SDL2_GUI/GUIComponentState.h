@@ -3,4 +3,4 @@
  *
  */
 
-enum class GUIComponentState { base, pressed, released };
+enum class GUIComponentState { base, pressed, released, editing };

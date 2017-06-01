@@ -3,7 +3,8 @@
 
 GUIButton::GUIButton(int x, int y, int w, int h, std::string label, TTF_Font * font, bool border)
 	: GUILabel(x, y, w, h, label, font, border) {
-
+	
+	this->clickedImage = nullptr;
 }
 
 
@@ -63,30 +64,24 @@ void GUIButton::draw(SDL_Renderer *renderer)
 	2 - Draw the label
 	3 - Draw the border
 	*/
-	Uint8 r, g, b, a;
-	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
 	if (this->state == GUIComponentState::base)
 	{
-		SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
-		SDL_RenderFillRect(renderer, &this->rectangle);
+		this->drawBackground(renderer, this->backgroundColor);	
+		this->drawBackgroundImage(renderer, this->backgroundImage, &this->backgroundImageRect );
 		// Draw the texture Label
 		SDL_RenderCopy(renderer, this->texture, NULL, &this->labelRectangle);
 	}
 	else 
 	{
-		SDL_SetRenderDrawColor(renderer, this->clickedColor.r, this->clickedColor.g, this->clickedColor.b, this->clickedColor.a);
-		SDL_RenderFillRect(renderer, &this->rectangle);
+		this->drawBackground(renderer, this->clickedColor);
+
+		this->drawBackgroundImage(renderer, this->clickedImage, &this->clickedImageRect);
 		// Draw the texture Label
 		SDL_RenderCopy(renderer, this->clickedTexture, NULL, &this->labelRectangle);
 	}
 		
-
-	// Draw the border
-	SDL_SetRenderDrawColor(renderer, this->borderColor.r, this->borderColor.g, this->borderColor.b, this->borderColor.a);
-	SDL_RenderDrawRect(renderer, &this->rectangle);
-
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	this->drawBorders(renderer);
 }
 
 void GUIButton::click(int x, int y)
@@ -105,5 +100,34 @@ void GUIButton::release(int x, int y)
 void GUIButton::setClickedColor(SDL_Color color)
 {
 	this->clickedColor = color;
+}
+
+void GUIButton::setClickedImage(SDL_Texture * clickedImage)
+{
+	this->clickedImage = clickedImage;
+
+	Uint32 textFormat;
+	int textW = 0;
+	int textH = 0;
+	int textAccess = 0;
+
+	SDL_QueryTexture(this->clickedImage, &textFormat, &textAccess, &textW, &textH);
+
+	this->setClickedImageRect(0, 0, textW, textH);
+
+}
+
+void GUIButton::setClickedImage(SDL_Texture * clickedImage, SDL_Rect rect)
+{
+	this->clickedImage = clickedImage;
+	this->setClickedImageRect(rect.x, rect.y, rect.w, rect.h);
+}
+
+void GUIButton::setClickedImageRect(int x, int y, int w, int h)
+{
+	this->clickedImageRect.x = x;
+	this->clickedImageRect.y = y;
+	this->clickedImageRect.w = w;
+	this->clickedImageRect.h = h;
 }
 

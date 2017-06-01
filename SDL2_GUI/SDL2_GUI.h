@@ -7,3 +7,4 @@
 #include "GUILabel.h"
 #include "GUIButton.h"
 #include "GUIPanel.h"
+#include "GUITextField.h"

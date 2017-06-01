@@ -87,6 +87,7 @@
     <ClCompile Include="GUIComponent.cpp" />
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="GUIPanel.cpp" />
+    <ClCompile Include="GUITextField.cpp" />
     <ClCompile Include="SDL2_GUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +97,7 @@
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="GUIComponentState.h" />
     <ClInclude Include="GUIPanel.h" />
+    <ClInclude Include="GUITextField.h" />
     <ClInclude Include="SDL2_GUI.h" />
   </ItemGroup>
   <ItemGroup>

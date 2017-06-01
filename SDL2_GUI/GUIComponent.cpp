@@ -25,15 +25,15 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 	Uint8 r, g, b, a;
 	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 	
-	SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a );
-	
-	SDL_RenderFillRect(renderer, &this->rectangle);
-
+	if (this->drawBgColor) {
+		SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
+		SDL_RenderFillRect(renderer, &this->rectangle);
+	}
 	/* If backgroundImage is not null*/
 	if (this->backgroundImage)
 	{
 
-		SDL_RenderCopy(renderer, this->backgroundImage, &this->rectangle, &this->rectangle);
+		SDL_RenderCopy(renderer, this->backgroundImage, &this->backgroundImageRect, &this->rectangle);
 	}
 	
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -60,7 +60,25 @@ void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha)
 		SDL_SetTextureAlphaMod(backgroundImage, alpha);
 	}
 	this->backgroundImage = backgroundImage;
+	
+	Uint32 textFormat;
+	int textW = 0;
+	int textH = 0;
+	int textAccess = 0;
+
+	SDL_QueryTexture(backgroundImage, &textFormat, &textAccess, &textW, &textH);
+	
+	this->setBackgroundImageRect(0, 0, textW, textH);
 }
+
+void GUIComponent::setBackgroundImageRect(int x, int y, int w, int h)
+{
+	this->backgroundImageRect.x = x;
+	this->backgroundImageRect.y = y;
+	this->backgroundImageRect.w = w;
+	this->backgroundImageRect.h = h;
+}
+
 
 
 void GUIComponent::setAction(std::function<void(void)> function)

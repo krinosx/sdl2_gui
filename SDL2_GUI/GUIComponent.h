@@ -38,20 +38,20 @@ private:
 
 	int getParentX();
 	int getParentY();
-
+	
 protected:
 	
-	SDL_Rect rectangle;
-	SDL_Color backgroundColor;
-	SDL_Texture *backgroundImage;
-	GUIComponent * parent;
-
-
+	SDL_Rect rectangle = { 0,0,0,0 };
+	SDL_Color backgroundColor = { 0,0,0,0 };
+	SDL_Texture *backgroundImage = NULL;
+	SDL_Rect backgroundImageRect = { 0,0,0,0 };
+	GUIComponent * parent = nullptr;
+	bool drawBgColor = true;
 	// internal use
 	GUIComponentState state = GUIComponentState::base;
 
 	// actions
-	std::function<void(void)> action;
+	std::function<void(void)> action = nullptr;
 
 	
 public:
@@ -63,6 +63,8 @@ public:
 	void setBackgroundImage(SDL_Texture *backgroundImage);
 	void setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha);
 
+	void setBackgroundImageRect(int x, int y, int w, int h);
+
 	virtual void draw(SDL_Renderer* renderer);
 	bool isInside(int x, int y);
 	virtual void click(int x, int y){};
@@ -72,5 +74,7 @@ public:
 	virtual void performAction();
 
 	virtual void setParent(GUIComponent * parent);
+
+	void setDrawBgColor(bool drawBgColor) { this->drawBgColor = drawBgColor; }
 
 };

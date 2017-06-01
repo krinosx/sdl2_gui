@@ -56,14 +56,31 @@ Goals:
 
 
 FIX and IMPROVE
+	
+
+NEW FEATURES
+	- Implement TextArea component ( to show long texts ) - Combine the Panel with a kind of label maybe?
+	- Implement scrollbars
+	- Implement Scroll Panels (a panel with scrollbars)
+
+
+
+
+*****************
+***** DONE  *****
+*****************
+01/06/2017
 	+ Implement the BLEND mode while creating surfaces for text in Labels/Buttons/etc
 		* implemented blend mode for text and background color in all components based in Label
 		* Implemented blend for background image for all GUIComponents ( add a new function void setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha); )
 
-
-NEW FEATURES
-	- Implement TextArea component ( to show long texts ) - Combine the Panel with a kind of label maybe?
-	- Implement TextField component ( to enable input text )
-	- Implement scrollbars
-	- Implement Scroll Panels (a panel with scrollbars)
-
+	+ Implement TextField component ( to enable input text )
+		* Implemented a GUITextField component. It is able to receive simple text input, render backgroud images/borders/backgroud color.
+		* It implements 2 states (GUIComponentState::base and GUIComponentState::editing) -> Each state has its own graphic configuration (diferente colors, bgImages, borders)
+		* It have a seccond action triggered when return is pressed ( GUITextField::returnPressedAction)
+		* New event handling implemented in GUIManager in order to deal with text editing features. At this moment only one component must edit text each time (there is need for more than one?)
+  
+  + Improved functionalities in GUIButton
+		* Now GUIButton have the option to render background images (one for each state).
+  
+  + Modified some function calls to make it more reusable in GUIComponent, GUILabel

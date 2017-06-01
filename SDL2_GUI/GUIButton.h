@@ -23,7 +23,8 @@ private:
 	SDL_Color clickedColor;
 	SDL_Texture *clickedTexture;
 	void generateClickedTexture(SDL_Renderer * renderer);
-	
+	SDL_Texture * clickedImage;
+	SDL_Rect clickedImageRect;
 
 public:
 	GUIButton(int x, int y, int w, int h, std::string label, TTF_Font * font, bool border = false);
@@ -32,4 +33,7 @@ public:
 	void click(int x, int y);
 	void release(int x, int y);
 	void setClickedColor(SDL_Color color);
+	void setClickedImage(SDL_Texture * clickedImage);
+	void setClickedImage(SDL_Texture * clickedImage, SDL_Rect rect);
+	void setClickedImageRect(int x, int y, int w, int h);
 };
