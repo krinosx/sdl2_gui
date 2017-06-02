@@ -56,12 +56,22 @@ Goals:
 
 
 FIX and IMPROVE
-	
+	- Implement scrollbars
+		- Implement use of Images to replace button graphics in scrollbar
+		- Implement a 'button' to indicate visually the scrollbar position
+
 
 NEW FEATURES
-	- Implement TextArea component ( to show long texts ) - Combine the Panel with a kind of label maybe?
-	- Implement scrollbars
+	
+
+	- Implement TextArea component ( to show long texts ) - 
+			- Combine the Panel with a kind of label maybe?
+			- Create a new type of component. Use viewport/rectangle/scrollbar
+
 	- Implement Scroll Panels (a panel with scrollbars)
+
+
+	
 
 
 
@@ -84,3 +94,11 @@ NEW FEATURES
 		* Now GUIButton have the option to render background images (one for each state).
   
   + Modified some function calls to make it more reusable in GUIComponent, GUILabel
+
+
+  02/06/2017
+  + Implement scrollbars
+		- Implemented a simple and fuction version of scrollbars.
+			* It has the option to set alignment (VERTICAL/HORIZONTAL)
+			* It check the boundaries about min and max values
+			* Its possible to add 2 callback functions to be notified when an increment or decrement occurs

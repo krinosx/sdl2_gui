@@ -28,6 +28,23 @@ void mouseReleased(SDL_Event mouseEvent);
 void draw(SDL_Renderer *renderer);
 
 
+
+SDL_Texture * loadImage(const char * path, SDL_Renderer * renderer )
+{
+	SDL_Surface *loadingSurface = IMG_Load( path );
+	if (!loadingSurface)
+	{
+		std::cout << "Error loading textfield BG image " << IMG_GetError() << std::endl;
+	}
+	SDL_Texture * loadedTexture = SDL_CreateTextureFromSurface(renderer, loadingSurface);
+
+	SDL_FreeSurface(loadingSurface);
+
+	return loadedTexture;
+}
+
+
+
 int main(int argc, char* argv[])
 {
 
@@ -55,7 +72,7 @@ int main(int argc, char* argv[])
 		std::cout << "Unable to init Image Library: " << IMG_GetError() << std::endl;
 	}
 
-	mainWindow = SDL_CreateWindow("SDL2_GUI", 10, 10, 800, 600, SDL_WINDOW_SHOWN);
+	mainWindow = SDL_CreateWindow("SDL2_GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
 
 	if (mainWindow == NULL)
 	{
@@ -89,37 +106,16 @@ int main(int argc, char* argv[])
 	/*********************************** 
 	*                Load Images
 	***********************************/
-	SDL_Surface *backgroundSurface = nullptr;
-	backgroundSurface = IMG_Load("E:\\Projetos\\assets\\map2.jpg");
-	if (!backgroundSurface)
-	{
-		std::cout << "IMG_Load error - Error loading map2.jpg : " << IMG_GetError() << std::endl;
-	}
+	
+	SDL_Texture * backgroundImage = loadImage("E:\\Projetos\\assets\\Sample_BG.png", sdlRenderer);
 
-	SDL_Texture* backgroundImage = SDL_CreateTextureFromSurface(sdlRenderer, backgroundSurface);
+	SDL_Texture * textfieldBg = loadImage("E:\\Projetos\\assets\\textfield_bg_border_gray_alpha.png", sdlRenderer);
 
-	SDL_FreeSurface(backgroundSurface);
+	SDL_Texture * textfieldEditingBg = loadImage("E:\\Projetos\\assets\\textfield_bg_border_cyan_alpha.png", sdlRenderer);
 
+	SDL_Texture * buttonOffBg = loadImage("E:\\Projetos\\assets\\buttons\\btn_1_off.png", sdlRenderer);
 
-	SDL_Surface *textFieldBgSurface = IMG_Load("E:\\Projetos\\assets\\textfield_bg_border_gray_alpha.png");
-	if (!textFieldBgSurface)
-	{
-		std::cout << "Error loading textfield BG image " << IMG_GetError() << std::endl;
-	}
-	SDL_Texture * textfieldBg = SDL_CreateTextureFromSurface(sdlRenderer, textFieldBgSurface);
-
-	SDL_FreeSurface(textFieldBgSurface);
-
-
-	SDL_Surface *textFieldBgSurfaceEditing = IMG_Load("E:\\Projetos\\assets\\textfield_bg_border_cyan_alpha.png");
-	if (!textFieldBgSurfaceEditing)
-	{
-		std::cout << "Error loading textfield BG image " << IMG_GetError() << std::endl;
-	}
-	SDL_Texture * textfieldEditingBg = SDL_CreateTextureFromSurface(sdlRenderer, textFieldBgSurfaceEditing);
-
-	SDL_FreeSurface(textFieldBgSurfaceEditing);
-
+	SDL_Texture * buttonLitBg = loadImage("E:\\Projetos\\assets\\buttons\\btn_1_lit.png", sdlRenderer);
 
 
 
@@ -147,71 +143,67 @@ int main(int argc, char* argv[])
 	/* Main SDL2_GUI object. All components will be childs of GUIManager */
 	GUIManager manager;
 
+	int rendererW, rendererH;
+	SDL_GetRendererOutputSize(sdlRenderer, &rendererW, &rendererH);
 
-	GUIPanel * mainPanel = new GUIPanel(100, 50, 500, 500);
+	GUIPanel * mainPanel = new GUIPanel(0, 0, rendererW, rendererH);
 	mainPanel->setOpaque(true);
-	//mainPanel->setBackgroundColor(bg);
-	mainPanel->setBackgroundImage(backgroundImage, 200);
-
-
-
-	GUIPanel * subPanel = new GUIPanel(10, 200, 400, 200);
+	mainPanel->setBackgroundImage(backgroundImage);
+	
+	GUIPanel * subPanel = new GUIPanel(75, 85, 685, 395);
 	subPanel->setOpaque(true);
-	subPanel->setBackgroundColor(c_blue);
-
-	GUILabel * testButton1 = new GUILabel(5, 5, 200, 50, "My Button", arial, false);
-	testButton1->setPadding(30, 30, 10, 10);
-	testButton1->setBackgroundColor(c_red);
-	testButton1->setBorderColor(border);
-	testButton1->setAction([] {std::cout << "Label lambdas" << std::endl; });
-
-
-	GUIButton * testButton3 = new GUIButton(20, 60, 200, 50, "Click and hold.", arial, false);
-	testButton3->setClickedColor(c_green);
-	testButton3->setBackgroundColor(c_blue);
-	testButton3->setBackgroundImage(textfieldBg);
-	testButton3->setClickedImage(textfieldEditingBg);
-	testButton3->setBorderColor(border);
+	subPanel->setDrawBgColor(false);
+	
+	GUILabel * testLabel1 = new GUILabel(400, 25, 450, 25, "Simple Ui Label", arial, false);
+	testLabel1->setLabelColor(c_white);
+	testLabel1->setDrawBgColor(false);
+	testLabel1->setBorderColor(c_white);
+	testLabel1->setAction([] {std::cout << "Clicked in Label" << std::endl; });
+		
+	GUIButton * button1 = new GUIButton(10, 1, 34, 34, "", arial, false);
+	button1->setClickedColor(c_green);
+	button1->setBackgroundColor(c_blue);
+	button1->setBackgroundImage(buttonOffBg);
+	button1->setClickedImage(buttonLitBg);
+	button1->setBorderColor(border);
 	//set button action
-	testButton3->setAction([&] {std::cout << "My lambda expression" << std::endl; });
-
-	GUIButton * testButton4 = new GUIButton(10, 1, 200, 50, "BTN SUBPANEL.", arial, false);
-	testButton4->setClickedColor(c_green);
-	testButton4->setBackgroundColor(c_blue);
-	testButton4->setBorderColor(border);
-	//set button action
-	testButton4->setAction([&] {std::cout << "Btn4 Clicked" << std::endl; });
-
-	mainPanel->addComponent(testButton1);
-	mainPanel->addComponent(testButton3);
-
-
-	mainPanel->addComponent(subPanel);
-	subPanel->addComponent(testButton4);
-
-	manager.addComponent(mainPanel);
-
-	GUITextField * textField = new GUITextField(100, 450, 190, 31, "Simple Text Field", arial, false);
-
+	button1->setAction([&] {std::cout << "Btn4 Clicked" << std::endl; });
+	
+	GUITextField * textField = new GUITextField(320, 550, 190, 31, "Simple Text Field", arial, false);
 	textField->setAction([&] {
 		std::cout << "Iniciando a digitacao do texto" << std::endl;
 		manager.setActiveInputTextComponent(textField);
 	});
-
 	textField->setReturnPressedAction([&] {
 		std::cout << "Texto Digitado: " << textField->getText() << std::endl;
 	});
-
-	textField->setBackgroundColor(c_white);
+	//textField->setBackgroundColor(c_white);
+	textField->setDrawBgColor(false);
 	textField->setPadding(5, 5, 5, 5);
 	textField->setLabelColor(c_blue);
 	textField->setBackgroundImage(textfieldBg);
 	textField->setBackgroundImageEditing(textfieldEditingBg);
 	textField->setMaxTextLenght(15);
 	
+	/*
+	Scrollbar
+	*/
 
+	GUIScrollbar *scrollbar = new GUIScrollbar(20, 230, 150, 20, arial, GUIScrollbar::ALIGN_VERTICAL);
+	scrollbar->setBackgroundColor(c_white);
+	scrollbar->setNotifyDecrementListener([&](unsigned int currentValue) { std::cout << "Notify Decrement" << currentValue << std::endl; });
+	scrollbar->setNotifyIncrementListener([&](unsigned int currentValue) { std::cout << "Notify Increment" << currentValue << std::endl; });
 
+	// Add fields to layout
+
+	mainPanel->addComponent(testLabel1);
+	mainPanel->addComponent(subPanel);
+	subPanel->addComponent(button1);
+
+	manager.addComponent(mainPanel);
 	manager.addComponent(textField);
+
+	mainPanel->addComponent(scrollbar);
 	
 	SDL_StartTextInput();
 	while (isAppRunning)

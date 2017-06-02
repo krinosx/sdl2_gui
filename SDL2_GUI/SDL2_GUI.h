@@ -8,3 +8,5 @@
 #include "GUIButton.h"
 #include "GUIPanel.h"
 #include "GUITextField.h"
+#include "GUIScrollbar.h"
+
