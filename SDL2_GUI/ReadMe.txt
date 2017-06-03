@@ -79,6 +79,23 @@ NEW FEATURES
 *****************
 ***** DONE  *****
 *****************
+
+03/06/2017
+	* Implemented GUISpinner component
+		- It combines a GUIScrollbar + GUITextField + GUIPannel to create a spinner component.
+		- It was used to test reusability of scrollbar + textfield
+		-it accepts negative values
+
+	* Modified textField component to accept regex filter and validate input characters.
+
+
+02/06/2017
+  + Implement scrollbars
+		- Implemented a simple and fuction version of scrollbars.
+			* It has the option to set alignment (VERTICAL/HORIZONTAL)
+			* It check the boundaries about min and max values
+			* Its possible to add 2 callback functions to be notified when an increment or decrement occurs
+
 01/06/2017
 	+ Implement the BLEND mode while creating surfaces for text in Labels/Buttons/etc
 		* implemented blend mode for text and background color in all components based in Label
@@ -96,9 +113,4 @@ NEW FEATURES
   + Modified some function calls to make it more reusable in GUIComponent, GUILabel
 
 
-  02/06/2017
-  + Implement scrollbars
-		- Implemented a simple and fuction version of scrollbars.
-			* It has the option to set alignment (VERTICAL/HORIZONTAL)
-			* It check the boundaries about min and max values
-			* Its possible to add 2 callback functions to be notified when an increment or decrement occurs
+  

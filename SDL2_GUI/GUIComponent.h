@@ -77,4 +77,7 @@ public:
 
 	void setDrawBgColor(bool drawBgColor) { this->drawBgColor = drawBgColor; }
 
+	SDL_Rect getRectangle() { return this->rectangle; }
+	virtual void resize(int x, int y, int w, int h) {};
+
 };

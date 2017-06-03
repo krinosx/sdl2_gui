@@ -56,14 +56,13 @@ GUIScrollbar::GUIScrollbar(int x, int y, int w, int h, TTF_Font *font, unsigned 
 
 void GUIScrollbar::increment() 
 {
-	std::cout << "Increment Value Triggered" << std::endl;
 	if (this->currentValue < this->max)
 	{
 		this->currentValue = ((this->currentValue + this->pace) > this->max) ? this->max : (this->currentValue + this->pace);
-		if (this->notifyIncrement)
-		{
-			this->notifyIncrement(this->currentValue);
-		}
+	}
+	if (this->notifyIncrement)
+	{
+		this->notifyIncrement(this->currentValue);
 	}
 	
 
@@ -71,16 +70,14 @@ void GUIScrollbar::increment()
 
 void GUIScrollbar::decrement()
 {
-	std::cout << "Decrement value Triggered" << std::endl;
 	if (this->currentValue > this->min)
 	{
 		this->currentValue = ((this->currentValue - this->pace) < this->min) ? this->min : (this->currentValue - this->pace);
-		if (this->notifyDecrement)
-		{
-			this->notifyDecrement(this->currentValue);
-		}
 	}
-	
+	if (this->notifyDecrement)
+	{
+		this->notifyDecrement(this->currentValue);
+	}
 
 }
 

@@ -12,7 +12,10 @@ GUIPanel::GUIPanel(int x, int y, int w, int h) : GUIComponent(x, y, w, h) {
 GUIPanel::~GUIPanel()
 {
 	for (GUIComponent * component : this->childs){
-		delete(component);
+		if (component)
+		{
+			delete(component);
+		}
 	}
 
 }

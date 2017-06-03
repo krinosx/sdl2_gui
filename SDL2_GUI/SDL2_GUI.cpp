@@ -194,6 +194,16 @@ int main(int argc, char* argv[])
 	scrollbar->setNotifyDecrementListener([&](unsigned int currentValue) { std::cout << "Notify Decrement" << currentValue << std::endl; });
 	scrollbar->setNotifyIncrementListener([&](unsigned int currentValue) { std::cout << "Notify Increment" << currentValue << std::endl; });
 
+
+	/*
+		Spinner
+	*/
+
+	GUISpinner * spinner = new GUISpinner(50, 150, 60, 30, arial, -10000, 10000);
+	spinner->setNotifyEditingListener([&](GUITextField * textField) {
+		manager.setActiveInputTextComponent(textField);
+	});
+
 	// Add fields to layout
 
 	mainPanel->addComponent(testLabel1);
@@ -204,7 +214,9 @@ int main(int argc, char* argv[])
 	manager.addComponent(textField);
 
 	mainPanel->addComponent(scrollbar);
-	
+	mainPanel->addComponent(spinner);
+
+
 	SDL_StartTextInput();
 	while (isAppRunning)
 	{

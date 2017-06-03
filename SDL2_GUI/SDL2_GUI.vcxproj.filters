@@ -42,6 +42,9 @@
     <ClCompile Include="GUIScrollbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUISpinner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIManager.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUIScrollbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISpinner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

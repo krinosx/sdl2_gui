@@ -1,17 +1,18 @@
 #pragma once
 #include "GUILabel.h"
+#include <regex>
 class GUITextField :
 	public GUILabel
 {
 
 private:
 	bool textChanged = false;
-	SDL_Color borderColorEditing;
+	SDL_Color borderColorEditing = { 0,0,0,0 };
 	bool isEditing = false;
 	int maxLenght = 256;
-	SDL_Texture * backgroundImageEditing;
-	SDL_Rect backgroundImageEditingRect;
-
+	SDL_Texture * backgroundImageEditing = NULL;
+	SDL_Rect backgroundImageEditingRect = { 0,0,0,0 };
+	std::regex regexFilter;
 protected:
 	std::function<void(void)> returnPressedAction;
 		
@@ -36,6 +37,7 @@ public:
 	void startEditing();
 	void stopEditing();
 	void setMaxTextLenght(int maxLenght);
+	void setFilter(const char * regexExpression);
 
 
 

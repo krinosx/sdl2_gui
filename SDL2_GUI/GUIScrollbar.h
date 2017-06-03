@@ -23,11 +23,6 @@ private:
 	GUIButton *incrementButton;
 	GUIButton *decrementButton;
 
-	unsigned const int minButtonSize = 20;
-	unsigned const int minBarWidth = minButtonSize * 2;
-	unsigned const int minBarHeight = minButtonSize;
-
-
 	std::function<void(unsigned int currentValue)> notifyDecrement = nullptr;
 	std::function<void(unsigned int currentValue)> notifyIncrement = nullptr;
 	
@@ -52,6 +47,13 @@ public:
 
 
 	void draw(SDL_Renderer * renderer);
+
+
+	// Constants
+	unsigned static const int minButtonSize = 20;
+	unsigned static const int minBarWidth = minButtonSize * 2;
+	unsigned static const int minBarHeight = minButtonSize;
+
 
 };
 

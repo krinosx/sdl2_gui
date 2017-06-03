@@ -9,4 +9,5 @@
 #include "GUIPanel.h"
 #include "GUITextField.h"
 #include "GUIScrollbar.h"
+#include "GUISpinner.h"
 

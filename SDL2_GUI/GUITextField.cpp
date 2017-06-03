@@ -1,5 +1,5 @@
 #include "GUITextField.h"
-
+#include <regex>
 
 void GUITextField::setReturnPressedAction(std::function<void(void)> function)
 {
@@ -10,6 +10,9 @@ GUITextField::GUITextField(int x, int y, int w, int h, std::string label, TTF_Fo
 	: GUILabel(x, y, w, h, label, font, border)
 {
 	this->textChanged = true;
+	this->backgroundImageEditing = NULL;
+	this->backgroundImage = NULL;
+	this->regexFilter = (".*");
 }
 
 GUITextField::~GUITextField()
@@ -29,11 +32,21 @@ void GUITextField::setText(std::string text)
 
 void GUITextField::concat(const char * c)
 {// Do we need to make a copy of this pointer?
-	if (this->label.size() < (size_t)this->maxLenght) 
+	// TODO: Use regex to filter the char c
+
+	if ( std::regex_match(c, this->regexFilter) ) 
 	{
-		this->label.append(c);
-		this->textChanged = true;
+		if (this->label.size() < (size_t)this->maxLenght)
+		{
+			this->label.append(c);
+			this->textChanged = true;
+		}
 	}
+	else {
+		std::cout << "invalid filter for this field: " << c << std::endl;
+	};
+
+	
 }
 
 void GUITextField::removeLastChar()
@@ -128,7 +141,10 @@ void GUITextField::release(int x, int y)
 void GUITextField::returnPressed()
 {
 	this->stopEditing();
-	this->returnPressedAction();
+	if (this->returnPressedAction) {
+		this->returnPressedAction();
+	}
+	
 }
 
 void GUITextField::startEditing()
@@ -144,4 +160,9 @@ void GUITextField::stopEditing()
 void GUITextField::setMaxTextLenght(int maxLenght)
 {
 	this->maxLenght = maxLenght;
+}
+
+void GUITextField::setFilter(const char * regexExpression)
+{
+	this->regexFilter.assign(regexExpression);
 }

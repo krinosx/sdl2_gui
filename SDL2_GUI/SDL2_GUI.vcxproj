@@ -88,6 +88,7 @@
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="GUIPanel.cpp" />
     <ClCompile Include="GUIScrollbar.cpp" />
+    <ClCompile Include="GUISpinner.cpp" />
     <ClCompile Include="GUITextField.cpp" />
     <ClCompile Include="SDL2_GUI.cpp" />
   </ItemGroup>
@@ -99,6 +100,7 @@
     <ClInclude Include="GUIComponentState.h" />
     <ClInclude Include="GUIPanel.h" />
     <ClInclude Include="GUIScrollbar.h" />
+    <ClInclude Include="GUISpinner.h" />
     <ClInclude Include="GUITextField.h" />
     <ClInclude Include="SDL2_GUI.h" />
   </ItemGroup>
