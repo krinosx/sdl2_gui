@@ -60,25 +60,25 @@ FIX and IMPROVE
 		- Implement use of Images to replace button graphics in scrollbar
 		- Implement a 'button' to indicate visually the scrollbar position
 
+	+ Implement TextArea component - 
+			- Implement support for a scrollable text, maybe a new component?
+			- It may be a subclass of scrollpanel one.
 
 NEW FEATURES
-	
-
-	- Implement TextArea component ( to show long texts ) - 
-			- Combine the Panel with a kind of label maybe?
-			- Create a new type of component. Use viewport/rectangle/scrollbar
-
 	- Implement Scroll Panels (a panel with scrollbars)
-
-
-	
-
-
 
 
 *****************
 ***** DONE  *****
 *****************
+05/06/2017
+	- Implement TextArea component ( to show long texts ) - 
+		* Implemented a first version of a textarea based on GUIPanel. This component support long text rendering
+		  with automatic line break, it has a padding attributes and show an text "(...)" when text overflows its
+		  defined height.
+
+	- Improvements: Added a attribute to show/hide components. If the component is set to hide it will no longer 
+		receive click events events or be draw.
 
 03/06/2017
 	* Implemented GUISpinner component

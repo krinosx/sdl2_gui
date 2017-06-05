@@ -47,6 +47,7 @@ protected:
 	SDL_Rect backgroundImageRect = { 0,0,0,0 };
 	GUIComponent * parent = nullptr;
 	bool drawBgColor = true;
+	bool visible = true;
 	// internal use
 	GUIComponentState state = GUIComponentState::base;
 
@@ -80,4 +81,9 @@ public:
 	SDL_Rect getRectangle() { return this->rectangle; }
 	virtual void resize(int x, int y, int w, int h) {};
 
+	/* Visibility function*/
+	bool isVisible();
+	void hide();
+	void show();
+	void toggle();
 };

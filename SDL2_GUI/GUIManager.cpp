@@ -36,9 +36,11 @@ void GUIManager::click(int x, int y)
 {
 	for (GUIComponent *comp : this->componentList)
 	{
-		if (comp->isInside(x, y))
-		{
-			comp->click(x, y);
+		if (comp->isVisible()) {
+			if (comp->isInside(x, y))
+			{
+				comp->click(x, y);
+			}
 		}
 	}
 }
@@ -52,9 +54,12 @@ void GUIManager::click(int x, int y)
 void GUIManager::release(int x, int y){
 	for (GUIComponent *comp : this->componentList)
 	{
-		if (comp->isInside(x, y))
+		if (comp->isVisible())
 		{
-			comp->release(x, y);
+			if (comp->isInside(x, y))
+			{
+				comp->release(x, y);
+			}
 		}
 	}
 }
@@ -113,6 +118,8 @@ void GUIManager::draw(SDL_Renderer* renderer)
 {
 	for (GUIComponent* component : this->componentList)
 	{
-		component->draw( renderer );
+		if (component->isVisible()) {
+			component->draw(renderer);
+		}
 	}
 }

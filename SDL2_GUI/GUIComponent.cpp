@@ -11,6 +11,7 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->state = GUIComponentState::base;
 	this->parent = nullptr;
 	this->backgroundImage = nullptr;
+	this->visible = true;
 
 }; 
 
@@ -118,4 +119,24 @@ void GUIComponent::setParent(GUIComponent * parent)
 		this->rectangle.x = this->x;
 		this->rectangle.y = this->y;
 	}
+}
+
+bool GUIComponent::isVisible()
+{
+	return this->visible;
+}
+
+void GUIComponent::hide()
+{
+	 this->visible = false;
+}
+
+void GUIComponent::show()
+{
+	this->visible = true;
+}
+
+void GUIComponent::toggle()
+{
+	this->visible = !this->visible;
 }

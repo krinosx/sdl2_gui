@@ -38,7 +38,11 @@ void GUIPanel::draw(SDL_Renderer * renderer)
 	
 	for (GUIComponent * comp : this->childs)
 	{
-		comp->draw(renderer);
+		if (comp->isVisible()) 
+		{
+			comp->draw(renderer);
+		}
+		
 	}
 }
 /*

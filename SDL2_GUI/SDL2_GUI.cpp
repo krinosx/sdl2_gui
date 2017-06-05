@@ -204,6 +204,20 @@ int main(int argc, char* argv[])
 		manager.setActiveInputTextComponent(textField);
 	});
 
+
+
+
+	/*
+		TextArea
+	*/
+	GUITextArea *textArea = new GUITextArea(164, 84, 600, 300, arial);
+	textArea->setOpaque(false);
+	textArea->setPadding(50, 10, 30, 30);
+	textArea->setText("Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo.");
+	textArea->setTextColor(c_white);
+	textArea->setDrawBgColor(false);
+	
+	
 	// Add fields to layout
 
 	mainPanel->addComponent(testLabel1);
@@ -216,6 +230,9 @@ int main(int argc, char* argv[])
 	mainPanel->addComponent(scrollbar);
 	mainPanel->addComponent(spinner);
 
+	mainPanel->addComponent(textArea);
+
+	bool created = true;
 
 	SDL_StartTextInput();
 	while (isAppRunning)
@@ -247,7 +264,6 @@ int main(int argc, char* argv[])
 				break;
 
 			case SDL_TEXTEDITING:
-				//manager.textInput(sdlEvent.edit);
 				std::cout << "TextEdit: { text:" << sdlEvent.edit.text 
 					<< " start:" << sdlEvent.edit.start 
 					<< " lenght:" << sdlEvent.edit.length << " } " << std::endl;
@@ -277,11 +293,22 @@ int main(int argc, char* argv[])
 
 	}
 
-
+	// Dealocate components
 	manager.destroy();
 
-	IMG_Quit();
 
+
+	SDL_DestroyTexture(backgroundImage);
+
+	SDL_DestroyTexture(textfieldBg);
+
+	SDL_DestroyTexture(textfieldEditingBg);
+
+	SDL_DestroyTexture(buttonOffBg);
+
+	SDL_DestroyTexture(buttonLitBg);
+	IMG_Quit();
+	
 	TTF_CloseFont(arial);
 	TTF_Quit();
 

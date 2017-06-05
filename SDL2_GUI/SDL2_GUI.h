@@ -10,4 +10,5 @@
 #include "GUITextField.h"
 #include "GUIScrollbar.h"
 #include "GUISpinner.h"
+#include "GUITextArea.h"
 
