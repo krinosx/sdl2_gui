@@ -13,6 +13,7 @@ private:
 	SDL_Texture * backgroundImageEditing = NULL;
 	SDL_Rect backgroundImageEditingRect = { 0,0,0,0 };
 	std::regex regexFilter;
+	bool isPassword = false;
 protected:
 	std::function<void(void)> returnPressedAction;
 		
@@ -38,6 +39,7 @@ public:
 	void stopEditing();
 	void setMaxTextLenght(int maxLenght);
 	void setFilter(const char * regexExpression);
+	void setIsPassword(bool isPassword);
 
 
 

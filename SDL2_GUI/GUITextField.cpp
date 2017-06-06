@@ -120,8 +120,7 @@ void GUITextField::draw(SDL_Renderer * renderer)
 	// 3 - Draw the text texture, respecting the paddings etc
 	if (textChanged)
 	{
-		//this->texture = this->generateTextTexture(renderer, this->label.c_str());
-		this->generateLabelTexture(renderer);
+		this->generateLabelTexture(renderer, this->isPassword);
 		this->textChanged = false;
 	}	
 	SDL_RenderCopy(renderer, this->texture, NULL, &this->labelRectangle);
@@ -165,4 +164,9 @@ void GUITextField::setMaxTextLenght(int maxLenght)
 void GUITextField::setFilter(const char * regexExpression)
 {
 	this->regexFilter.assign(regexExpression);
+}
+
+void GUITextField::setIsPassword(bool isPassword)
+{
+	this->isPassword = isPassword;
 }

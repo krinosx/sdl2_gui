@@ -14,10 +14,11 @@
     <ProjectGuid>{FD0B735C-E081-4F0B-8300-98DF7136F1DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SDL2_GUI</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -91,7 +92,6 @@
     <ClCompile Include="GUISpinner.cpp" />
     <ClCompile Include="GUITextArea.cpp" />
     <ClCompile Include="GUITextField.cpp" />
-    <ClCompile Include="SDL2_GUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIButton.h" />
@@ -104,7 +104,6 @@
     <ClInclude Include="GUISpinner.h" />
     <ClInclude Include="GUITextArea.h" />
     <ClInclude Include="GUITextField.h" />
-    <ClInclude Include="SDL2_GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

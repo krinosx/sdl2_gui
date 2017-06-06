@@ -1,0 +1,10 @@
+#pragma once
+#include "GUIComponent.h"
+#include "GUIManager.h"
+#include "GUILabel.h"
+#include "GUIButton.h"
+#include "GUIPanel.h"
+#include "GUITextField.h"
+#include "GUIScrollbar.h"
+#include "GUISpinner.h"
+#include "GUITextArea.h"

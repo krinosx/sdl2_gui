@@ -1,20 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL2_GUI", "SDL2_GUI\SDL2_GUI.vcxproj", "{FD0B735C-E081-4F0B-8300-98DF7136F1DD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL2_GUI_Demo", "SDL2_GUI_Demo\SDL2_GUI_Demo.vcxproj", "{E8D10411-27D1-4B82-A7B2-9539330B3090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Debug|Win32.ActiveCfg = Debug|Win32
 		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Debug|Win32.Build.0 = Debug|Win32
+		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Debug|x64.ActiveCfg = Debug|Win32
 		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Release|Win32.ActiveCfg = Release|Win32
 		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Release|Win32.Build.0 = Release|Win32
+		{FD0B735C-E081-4F0B-8300-98DF7136F1DD}.Release|x64.ActiveCfg = Release|Win32
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Debug|Win32.Build.0 = Debug|Win32
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Debug|x64.ActiveCfg = Debug|x64
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Debug|x64.Build.0 = Debug|x64
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Release|Win32.ActiveCfg = Release|Win32
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Release|Win32.Build.0 = Release|Win32
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Release|x64.ActiveCfg = Release|x64
+		{E8D10411-27D1-4B82-A7B2-9539330B3090}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

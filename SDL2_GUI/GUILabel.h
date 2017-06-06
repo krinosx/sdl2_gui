@@ -21,8 +21,8 @@ protected:
 	
 	/** Distance from Left/Right/Top/Bottom in pixels to draw the text */
 	int padLeft, padRight, padTop, padBottom = 0;
-	
-	void generateLabelTexture(SDL_Renderer *renderer);
+	//void generateLabelTexture(SDL_Renderer *renderer);
+	void generateLabelTexture(SDL_Renderer *renderer, bool isPassword = false);
 	SDL_Texture* generateTextTexture(SDL_Renderer * renderer, const char *text);
 
 	// Draw functions
@@ -45,4 +45,5 @@ public:
 	void release(int x, int y);
 	void setPadding(int left, int right, int top, int bottom);
 };
+
 

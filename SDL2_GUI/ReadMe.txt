@@ -73,12 +73,16 @@ NEW FEATURES
 *****************
 05/06/2017
 	- Implement TextArea component ( to show long texts ) - 
-		* Implemented a first version of a textarea based on GUIPanel. This component support long text rendering
-		  with automatic line break, it has a padding attributes and show an text "(...)" when text overflows its
-		  defined height.
+		* Implemented a first version of a textarea based on GUIPanel. This component support 
+		long text rendering with automatic line break, it has a padding attributes and show an
+		 text "(...)" when text overflows its defined height.
 
-	- Improvements: Added a attribute to show/hide components. If the component is set to hide it will no longer 
-		receive click events events or be draw.
+	- Improvements: 
+		* Added a attribute to show/hide components. If the component is set to hide it will 
+		  no longer receive click events events or be draw.
+		* Added a feature to render textFields as a password fields. Now if the function
+		textfield->setIsPassword(bool) receive TRUE as parameter the text will be rendered
+		as a '*' characters.
 
 03/06/2017
 	* Implemented GUISpinner component

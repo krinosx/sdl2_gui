@@ -103,7 +103,12 @@ void GUILabel::drawBorders(SDL_Renderer * renderer)
 	Generate a texture to print based on current text and label atributes.
 
 */
-void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
+/*void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
+{
+	this->generateLabelTexture(renderer, false);
+}*/
+
+void GUILabel::generateLabelTexture(SDL_Renderer *renderer, bool isPassword)
 {
 	// Clear texture if it already exists to free memory.
 	if (this->texture)
@@ -111,8 +116,16 @@ void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
 		SDL_DestroyTexture(this->texture);
 	}
 	// Generate a new texture (and allocate memory for it)
-	this->texture = this->generateTextTexture(renderer, this->label.c_str());
-	
+	if (isPassword) {
+
+		std::string passText(label.size(), '*');
+
+		this->texture = this->generateTextTexture(renderer, passText.c_str());
+	}
+	else {
+
+		this->texture = this->generateTextTexture(renderer, this->label.c_str());
+	}
 
 	int textureWidth, textureHeight;
 	SDL_QueryTexture(this->texture, NULL, NULL, &textureWidth, &textureHeight);
@@ -147,7 +160,7 @@ void GUILabel::draw(SDL_Renderer *renderer)
 	 */
 	if (this->texture == nullptr)
 	{
-		generateLabelTexture(renderer);
+		generateLabelTexture(renderer, false);
 	}
 	/*
 	Draw Order
