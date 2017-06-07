@@ -6,7 +6,8 @@ GUIPanel::GUIPanel() : GUIComponent(0, 0, 0, 0) {
 };
 
 GUIPanel::GUIPanel(int x, int y, int w, int h) : GUIComponent(x, y, w, h) {
-
+	this->setId(std::string("GUIPannel-").append(std::to_string(GUIComponent::compCount)));
+	this->invalidateRenderState();
 };
 
 GUIPanel::~GUIPanel()
@@ -27,23 +28,28 @@ void GUIPanel::addComponent(GUIComponent * component)
 		component->setParent(this);
 		this->childs.push_back(component);	
 	}
+	this->invalidateRenderState();
 }
 
 void GUIPanel::draw(SDL_Renderer * renderer)
 {
+	
 	if (this->opaque)
 	{
 		GUIComponent::draw(renderer); // render background color
 	}
-	
+
 	for (GUIComponent * comp : this->childs)
 	{
-		if (comp->isVisible()) 
+		if (comp->isVisible())
 		{
 			comp->draw(renderer);
 		}
-		
+
 	}
+
+	this->validateRenderState();
+	
 }
 /*
 	If set to opaque = true the background will be rendered. If it is set to 
@@ -53,11 +59,13 @@ void GUIPanel::draw(SDL_Renderer * renderer)
 void GUIPanel::setOpaque(bool opaque) 
 { 
 	this->opaque = opaque;
-};
+	this->invalidateRenderState();
+}
+
 bool GUIPanel::isOpaque() 
 { 
 	return this->opaque;
-};
+}
 
 void GUIPanel::click(int x, int y)
 {
@@ -88,4 +96,5 @@ void GUIPanel::setParent(GUIComponent * parent)
 	{
 		comp->setParent(this);
 	}
+	this->invalidateRenderState();
 }

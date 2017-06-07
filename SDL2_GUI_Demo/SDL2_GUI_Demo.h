@@ -8,3 +8,4 @@
 #include "GUIScrollbar.h"
 #include "GUISpinner.h"
 #include "GUITextArea.h"
+#include "GUIScrollPanel.h"

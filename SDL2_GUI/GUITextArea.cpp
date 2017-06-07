@@ -116,17 +116,15 @@ SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLine
 
 void GUITextArea::draw(SDL_Renderer * renderer)
 {
-	if (this->textChanged)
-	{
+	if (!this->isRenderStateValid()) {
 		this->textTexture = renderTextToTexture(this->textLines, this->textFont, this->rectangle, renderer);
-		this->textChanged = false;
 	}
 
-	// Draw BGColor and chield elements
+	// Draw BGColor and child elements
 	GUIPanel::draw(renderer);
-
 	SDL_RenderCopy(renderer, this->textTexture, NULL,&this->rectangle);
-
+	this->validateRenderState();
+	
 }
 
 
@@ -197,7 +195,9 @@ std::vector<std::string> GUITextArea::getTextLinex(std::string text, SDL_Rect bo
 GUITextArea::GUITextArea(int x, int y, int w, int h, TTF_Font * font)
 	:GUIPanel(x, y, w, h), paddingLeft(5), paddingRight(5), paddingTop(5), paddingBottom(5), textTexture(NULL)
 {
+	this->setId(std::string("GUITextArea-").append(std::to_string(GUIComponent::compCount)));
 	this->textFont = font;
+	this->invalidateRenderState();
 	
 }
 
@@ -211,17 +211,19 @@ GUITextArea::~GUITextArea()
 
 int GUITextArea::setText(std::string text)
 {
-	this->textChanged = true;
+	this->invalidateRenderState();
 	this->text = text;
 
 	this->textLines = this->getTextLinex(text, this->rectangle, this->textFont);
 
 	return this->textLines.empty() ?  this->textLines.size() : 0;
+	this->invalidateRenderState();
 }
 
 void GUITextArea::setTextColor(SDL_Color color)
 {
 	this->textColor = color;
+	this->invalidateRenderState();
 }
 
 void GUITextArea::setPadding(int paddingLeft, int paddingRight, int paddingTop, int paddingBottom)
@@ -230,4 +232,5 @@ void GUITextArea::setPadding(int paddingLeft, int paddingRight, int paddingTop, 
 	this->paddingRight = paddingRight;
 	this->paddingTop = paddingTop;
 	this->paddingBottom = paddingBottom;
+	this->invalidateRenderState();
 }

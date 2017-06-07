@@ -6,17 +6,21 @@ void GUISpinner::increment()
 {
 	this->currentValue = (this->currentValue + this->pace) > this->maxValue ? this->maxValue : (this->currentValue + this->pace);
 	this->editingField->setText(std::to_string(this->currentValue));
+	this->invalidateRenderState();
 }
 
 void GUISpinner::decrement()
 {
 	this->currentValue = (this->currentValue - this->pace) < this->minValue ? this->minValue : (this->currentValue - this->pace);
 	this->editingField->setText(std::to_string(this->currentValue));
+	this->invalidateRenderState();
 }
 
 GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue, int maxValue)
 	:GUIPanel(x,y,w,h), minValue(minValue), maxValue(maxValue), font(font)
 {
+
+	this->setId(std::string("GUISpinner-").append(std::to_string(GUIComponent::compCount)));
 	// Calculate the minimum lenght of textField
 	int minTextFieldWidth = 0;
 	int minTextFieldHeight = 0;
@@ -31,8 +35,8 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 	int textFieldHeight = minTextFieldHeight < maxTextFieldHeight ? maxTextFieldHeight : minTextFieldHeight;
 	
 	// scrollbar is based on horizontal alight
-	int minScrollBarHeight = GUIScrollbar::minBarWidth;
-	int minScrollBarWidth = GUIScrollbar::minBarHeight;
+	int minScrollBarHeight = GUIScrollbar::MIN_BAR_WIDTH;
+	int minScrollBarWidth = GUIScrollbar::MIN_BAR_HEIGHT;
 
 	if (this->rectangle.h < minScrollBarHeight)
 	{
@@ -92,6 +96,7 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 	this->setOpaque(true);
 	this->addComponent(this->editingField);
 	this->addComponent(this->scrollbar);
+	this->invalidateRenderState();
 }
 
 GUISpinner::~GUISpinner()
@@ -108,11 +113,14 @@ int GUISpinner::getCurrentValue()
 void GUISpinner::setCurrentvalue(int value)
 {
 	this->currentValue = value > this->maxValue ? this->maxValue : value < minValue ? this->minValue : value;
+	this->invalidateRenderState();
 }
 
 void GUISpinner::draw(SDL_Renderer * renderer)
 {
+
 	GUIPanel::draw(renderer);
+	this->validateRenderState();
 }
 
 void GUISpinner::setMinValue(int minValue)

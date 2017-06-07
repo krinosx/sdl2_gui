@@ -1,5 +1,6 @@
 #include "GUIComponent.h"
 
+int GUIComponent::compCount = 0;
 
 GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX), y(posY), w(width), h(height) {
 	this->rectangle.h = height;
@@ -13,6 +14,10 @@ GUIComponent::GUIComponent(int posX, int posY, int width, int height) : x(posX),
 	this->backgroundImage = nullptr;
 	this->visible = true;
 
+	GUIComponent::compCount++;
+	this->setId(std::string("GUIComponent-").append(std::to_string(GUIComponent::compCount)) );
+
+	this->invalidateRenderState();
 }; 
 
 
@@ -20,24 +25,36 @@ GUIComponent::~GUIComponent()
 {
 }
 
+std::string GUIComponent::getId()
+{
+	return this->compId;
+}
+
+void GUIComponent::setId(std::string id)
+{
+	this->compId = id;
+}
+
 
 void GUIComponent::draw(SDL_Renderer* renderer)
 {
-	Uint8 r, g, b, a;
-	SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 	
-	if (this->drawBgColor) {
-		SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
-		SDL_RenderFillRect(renderer, &this->rectangle);
-	}
-	/* If backgroundImage is not null*/
-	if (this->backgroundImage)
-	{
+		Uint8 r, g, b, a;
+		SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
-		SDL_RenderCopy(renderer, this->backgroundImage, &this->backgroundImageRect, &this->rectangle);
-	}
-	
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+		if (this->drawBgColor) {
+			SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
+			SDL_RenderFillRect(renderer, &this->rectangle);
+		}
+		/* If backgroundImage is not null*/
+		if (this->backgroundImage)
+		{
+			SDL_RenderCopy(renderer, this->backgroundImage, &this->backgroundImageRect, &this->rectangle);
+		}
+
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
+		
+		this->validateRenderState();
 }
 
 
@@ -49,6 +66,7 @@ bool GUIComponent::isInside(int x, int y)
 void GUIComponent::setBackgroundColor(SDL_Color backgroundColor)
 {
 	this->backgroundColor = backgroundColor;
+	this->invalidateRenderState();
 }
 
 void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage) {
@@ -70,6 +88,7 @@ void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha)
 	SDL_QueryTexture(backgroundImage, &textFormat, &textAccess, &textW, &textH);
 	
 	this->setBackgroundImageRect(0, 0, textW, textH);
+	this->invalidateRenderState();
 }
 
 void GUIComponent::setBackgroundImageRect(int x, int y, int w, int h)
@@ -78,6 +97,7 @@ void GUIComponent::setBackgroundImageRect(int x, int y, int w, int h)
 	this->backgroundImageRect.y = y;
 	this->backgroundImageRect.w = w;
 	this->backgroundImageRect.h = h;
+	this->invalidateRenderState();
 }
 
 
@@ -110,7 +130,7 @@ void GUIComponent::setParent(GUIComponent * parent)
 
 	if (parent)
 	{
-		// change rectangle position
+		// change rectangle position - WTF?
 		this->rectangle.x = this->getParentX();
 		this->rectangle.y = this->getParentY();
 	}
@@ -129,14 +149,32 @@ bool GUIComponent::isVisible()
 void GUIComponent::hide()
 {
 	 this->visible = false;
+	 this->invalidateRenderState();
 }
 
 void GUIComponent::show()
 {
 	this->visible = true;
+	this->invalidateRenderState();
 }
 
 void GUIComponent::toggle()
 {
 	this->visible = !this->visible;
+	this->invalidateRenderState();
+}
+
+void GUIComponent::invalidateRenderState()
+{
+	this->renderStateValid = false;
+}
+
+void GUIComponent::validateRenderState()
+{
+	this->renderStateValid = true;
+}
+
+bool GUIComponent::isRenderStateValid()
+{
+	return this->renderStateValid;
 }

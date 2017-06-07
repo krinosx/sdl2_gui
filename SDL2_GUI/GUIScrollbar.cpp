@@ -9,14 +9,15 @@ GUIScrollbar::GUIScrollbar()
 GUIScrollbar::GUIScrollbar(int x, int y, int w, int h, TTF_Font *font, unsigned int align)
 	: GUIPanel(x, y, w, h), align(align)
 {
+	this->setId(std::string("GUIScrollBar-").append(std::to_string(GUIComponent::compCount)));
 	// Check min value constraints
-	this->rectangle.w = (unsigned int)this->rectangle.w < this->minBarWidth ?  this->minBarWidth : this->rectangle.w;
-	this->rectangle.h = (unsigned int)this->rectangle.h < this->minBarHeight ? this->minBarHeight : this->rectangle.h;
+	this->rectangle.w = (unsigned int)this->rectangle.w < this->MIN_BAR_WIDTH ?  this->MIN_BAR_WIDTH : this->rectangle.w;
+	this->rectangle.h = (unsigned int)this->rectangle.h < this->MIN_BAR_HEIGHT ? this->MIN_BAR_HEIGHT : this->rectangle.h;
 
 	this->setOpaque(true);
 
 
-	int buttonSize = (unsigned int)(this->rectangle.w / 20) < this->minButtonSize ? this->minButtonSize : (int)(this->rectangle.w / 20);
+	int buttonSize = (unsigned int)(this->rectangle.w / 20) < this->MIN_BUTTON_SIZE ? this->MIN_BUTTON_SIZE : (int)(this->rectangle.w / 20);
 
 	// resize the pannel based on align
 	if (this->align == ALIGN_VERTICAL)
@@ -48,6 +49,7 @@ GUIScrollbar::GUIScrollbar(int x, int y, int w, int h, TTF_Font *font, unsigned 
 	this->addComponent(this->decrementButton);
 	// Create increment and decrement buttons
 	
+	this->invalidateRenderState();
 
 
 
@@ -128,4 +130,5 @@ void GUIScrollbar::setNotifyDecrementListener(std::function<void(unsigned int cu
 void GUIScrollbar::draw(SDL_Renderer * renderer)
 {
 	GUIPanel::draw(renderer);
+	this->validateRenderState();
 }

@@ -9,10 +9,11 @@
 class GUIPanel : public GUIComponent
 {
 private:
-	std::vector<GUIComponent*> childs;
+	
 	bool opaque = false;
 
 protected:
+	std::vector<GUIComponent*> childs;
 	void setParent(GUIComponent * parent);
 
 public:

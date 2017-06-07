@@ -5,6 +5,10 @@ GUIButton::GUIButton(int x, int y, int w, int h, std::string label, TTF_Font * f
 	: GUILabel(x, y, w, h, label, font, border) {
 	
 	this->clickedImage = nullptr;
+	this->clickedTexture = nullptr;
+	this->invalidateRenderState();
+	this->setId(std::string("GUIButton-").append(std::to_string(GUIComponent::compCount)));
+
 }
 
 
@@ -12,7 +16,7 @@ GUIButton::~GUIButton()
 {
 	if (this->clickedTexture != nullptr)
 	{
-		SDL_DestroyTexture(this->clickedTexture);
+			SDL_DestroyTexture(this->clickedTexture);
 	}
 
 }
@@ -82,18 +86,21 @@ void GUIButton::draw(SDL_Renderer *renderer)
 	}
 		
 	this->drawBorders(renderer);
+
+	this->validateRenderState();
 }
 
 void GUIButton::click(int x, int y)
 {
 	this->state = GUIComponentState::pressed;
-
+	this->invalidateRenderState();
 }
 void GUIButton::release(int x, int y)
 {
 	this->state = GUIComponentState::base;
 	
 	this->performAction();
+	this->invalidateRenderState();
 }
 
 

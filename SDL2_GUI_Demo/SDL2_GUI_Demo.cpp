@@ -17,7 +17,7 @@
 
 
 #include <memory>
-#include "SDL2_GUI.h"
+#include "SDL2_GUI_Demo.h"
 
 
 void checkSDLError(int);
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
 	testLabel1->setBorderColor(c_white);
 	testLabel1->setAction([] {std::cout << "Clicked in Label" << std::endl; });
 
-	GUIButton * button1 = new GUIButton(10, 1, 34, 34, "", arial, false);
+	GUIButton * button1 = new GUIButton(10, 30, 34, 34, "", arial, false);
 	button1->setClickedColor(c_green);
 	button1->setBackgroundColor(c_blue);
 	button1->setBackgroundImage(buttonOffBg);
@@ -170,6 +170,7 @@ int main(int argc, char* argv[])
 	button1->setAction([&] {std::cout << "Btn4 Clicked" << std::endl; });
 
 	GUITextField * textField = new GUITextField(320, 550, 190, 31, "Simple Text Field", arial, false);
+
 	textField->setIsPassword(false);
 	textField->setAction([&] {
 		std::cout << "Iniciando a digitacao do texto" << std::endl;
@@ -211,28 +212,40 @@ int main(int argc, char* argv[])
 	/*
 	TextArea
 	*/
-	GUITextArea *textArea = new GUITextArea(164, 84, 600, 300, arial);
+	GUITextArea *textArea = new GUITextArea(0, 0, 600, 500, arial);
 	textArea->setOpaque(false);
-	textArea->setPadding(50, 10, 30, 30);
-	textArea->setText("Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo.");
+	textArea->setPadding(0, 15, 0, 0);
+	textArea->setText("Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo.");
 	textArea->setTextColor(c_white);
 	textArea->setDrawBgColor(false);
 
 
+	/*
+		Scrollpanel
+	*/
+	GUIScrollPanel * scrollPannel = new GUIScrollPanel(164, 200, 600, 200, arial);
+	scrollPannel->setYPace(21);
+	scrollPannel->addComponent(textArea);
+	
+	//scrollPannel->setDrawBgColor(true);
+
+	//scrollPannel->addComponent(textField);
 	// Add fields to layout
 
 	mainPanel->addComponent(testLabel1);
 	mainPanel->addComponent(subPanel);
 	subPanel->addComponent(button1);
 
-	manager.addComponent(mainPanel);
-	manager.addComponent(textField);
+
 
 	mainPanel->addComponent(scrollbar);
 	mainPanel->addComponent(spinner);
 
-	mainPanel->addComponent(textArea);
+	mainPanel->addComponent(scrollPannel);
 
+
+	manager.addComponent(mainPanel);
+	manager.addComponent(textField);
 	bool created = true;
 
 	SDL_StartTextInput();
@@ -260,7 +273,6 @@ int main(int argc, char* argv[])
 				break;
 			case SDL_MOUSEBUTTONUP:
 				manager.release(sdlEvent.button.x, sdlEvent.button.y);
-
 				mouseReleased(sdlEvent);
 				break;
 

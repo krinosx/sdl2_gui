@@ -50,9 +50,9 @@ public:
 
 
 	// Constants
-	unsigned static const int minButtonSize = 20;
-	unsigned static const int minBarWidth = minButtonSize * 2;
-	unsigned static const int minBarHeight = minButtonSize;
+	unsigned static const int MIN_BUTTON_SIZE = 20;
+	unsigned static const int MIN_BAR_WIDTH = MIN_BUTTON_SIZE * 2;
+	unsigned static const int MIN_BAR_HEIGHT = MIN_BUTTON_SIZE;
 
 
 };

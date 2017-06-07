@@ -40,7 +40,8 @@ private:
 	int getParentY();
 	
 protected:
-	
+	static int compCount;
+	std::string compId;
 	SDL_Rect rectangle = { 0,0,0,0 };
 	SDL_Color backgroundColor = { 0,0,0,0 };
 	SDL_Texture *backgroundImage = NULL;
@@ -53,12 +54,17 @@ protected:
 
 	// actions
 	std::function<void(void)> action = nullptr;
-
+	//
+	bool renderStateValid = false;
 	
 public:
 	
 	GUIComponent(int posX, int posY, int width, int height);
 	virtual ~GUIComponent();
+
+	std::string getId();
+	void setId(std::string id);
+
 	const GUIComponentState getState() { return this->state; }
 	void setBackgroundColor(SDL_Color backgroundColor);
 	void setBackgroundImage(SDL_Texture *backgroundImage);
@@ -86,4 +92,10 @@ public:
 	void hide();
 	void show();
 	void toggle();
+
+	/* Invalidate the render state and indicate it needs a redraw */
+	void invalidateRenderState();
+	void validateRenderState();
+	bool isRenderStateValid();
+	
 };

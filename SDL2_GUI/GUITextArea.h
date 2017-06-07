@@ -13,7 +13,7 @@ private:
 	
 	std::vector<std::string> textLines;
 	std::vector<std::string> getTextLinex(std::string text, SDL_Rect bounds, TTF_Font * font);
-	bool textChanged = false;
+
 	SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLines, TTF_Font * font, SDL_Rect bounds, SDL_Renderer * renderer );
 
 

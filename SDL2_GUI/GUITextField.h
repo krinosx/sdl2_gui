@@ -6,7 +6,6 @@ class GUITextField :
 {
 
 private:
-	bool textChanged = false;
 	SDL_Color borderColorEditing = { 0,0,0,0 };
 	bool isEditing = false;
 	int maxLenght = 256;

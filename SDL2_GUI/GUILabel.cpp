@@ -15,6 +15,10 @@ GUIComponent(x, y, w, h), label(label), drawBorder(border), font(font)
 	this->padBottom = 0;
 
 	this->backgroundImage = nullptr;
+
+	this->invalidateRenderState();
+
+	this->setId(std::string("GUILabel-").append(std::to_string(GUIComponent::compCount)));
 }
 
 GUILabel::~GUILabel()
@@ -103,10 +107,7 @@ void GUILabel::drawBorders(SDL_Renderer * renderer)
 	Generate a texture to print based on current text and label atributes.
 
 */
-/*void GUILabel::generateLabelTexture(SDL_Renderer *renderer)
-{
-	this->generateLabelTexture(renderer, false);
-}*/
+
 
 void GUILabel::generateLabelTexture(SDL_Renderer *renderer, bool isPassword)
 {
@@ -158,8 +159,7 @@ void GUILabel::draw(SDL_Renderer *renderer)
 	/* If its the first time rendering, create the label texture. 
 	 * If the Label value is changed, the this->texture must be set to NULL
 	 */
-	if (this->texture == nullptr)
-	{
+	if (!this->isRenderStateValid()) {
 		generateLabelTexture(renderer, false);
 	}
 	/*
@@ -172,8 +172,11 @@ void GUILabel::draw(SDL_Renderer *renderer)
 
 	// Draw the texture Label
 	SDL_RenderCopy(renderer, this->texture, NULL, &this->labelRectangle);
-	
+
 	this->drawBorders(renderer);
+
+	this->validateRenderState();
+	
 }
 
 void GUILabel::setBorderColor(SDL_Color color)
@@ -184,6 +187,7 @@ void GUILabel::setBorderColor(SDL_Color color)
 void GUILabel::setLabelColor(SDL_Color color)
 {
 	this->labelColor = color;
+	this->invalidateRenderState();
 }
 
 void GUILabel::release(int x, int y)
@@ -197,10 +201,12 @@ void GUILabel::setPadding(int left, int right, int top, int bottom)
 	this->padRight = right;
 	this->padTop = top;
 	this->padBottom = bottom;
+	this->invalidateRenderState();
 }
 
 void GUILabel::setParent(GUIComponent * parent)
 {
 	GUIComponent::setParent(parent);
 	this->texture = nullptr;
+	this->invalidateRenderState();
 }

@@ -60,17 +60,67 @@ FIX and IMPROVE
 		- Implement use of Images to replace button graphics in scrollbar
 		- Implement a 'button' to indicate visually the scrollbar position
 
-	+ Implement TextArea component - 
-			- Implement support for a scrollable text, maybe a new component?
-			- It may be a subclass of scrollpanel one.
+	- Implement Scroll Panels
+		- Implement support for HorizontalScrolling
+
+	- SDL2_GUI_Demo
+		- Improve the showcase,
+
 
 NEW FEATURES
-	- Implement Scroll Panels (a panel with scrollbars)
+	- Create Statistics
+		- Create a mechanism to mensure the component drawing performance and
+		help the DEBUG (some data structure to store component timings, etc)
+
+	- Documentation
+		* Create a basic documentation to show how to use the components
+
+	- Implement Toggle Button (like a checkbox)
+	
+	(optional)
+	- Map<std::string, GUIComponent> -> A lookup mechanism to get the elements by ID
 
 
 *****************
 ***** DONE  *****
 *****************
+06/06/2017
+	+ Implement Scroll Panels (a panel with scrollbars)
+		* Implemented a first version of scrollpanel (GUIScrollPanel)
+		 - Supports child elements and calculate the need of a Vertical Scrollbar (horizontal
+		  scroll not yet implemented) based on child positioning. Child positioning is 
+		  relative to ScrollPanel position.
+		  - Child elements deals with events (click and release)
+
+	+ Implement TextArea component - 
+		+ It does not need a new component. It is possible to add a GUITextArea as a child of
+		  GUIScrollPane to the desired functionality (is it worth to write a new component?)
+		
+	+ Add a new attribute and functions to controll the drawing of components
+		* bool GUIComponent::renderStateValid -> Indicates if the appearence of a component 
+			changed and a redraw is necessary
+		* bool GUIComponent::isRenderStateValid() -> accessor for renderStateValid attribute
+		* bool GUIComponent::invalidateRenderState() -> set renderStateValid to false
+		* bool GUIComponent::validateRenderState() -> set renderStateValid to true
+		* Obs: The components does not use it as it fully potential because the nature of SDL
+		rendering process is to clear the render and redraw everything each scene. Some 
+		optimization may be implemented if the API is used in a non game context.
+
+	+ Add a new attribute to identify the components
+		std::string GUIComponent::compId; - A Identifying name for the component. The primary
+		objective is to make it easy to debug and identify the components. Eacho constructor
+		is creating its ow name based on a static variable (int GUIComponent::compCount) 
+		created and incremented each time a GUIComponent is instantiated. It may be used 
+		in the future to generate a Map<String, GUIComponent> in order to enable direct
+		lookup of components from end users.
+
+
+	+ Project Segregation/Build Change
+		+ Now the main project is build as a Static Library (.lib) so it can be imported and
+		referenced by Other projects (and fullfill its creation purpose). A separated project
+		(SDL2_GUI_Demo) was created to test the .lib and show the basic usage of created 
+		components
+
 05/06/2017
 	- Implement TextArea component ( to show long texts ) - 
 		* Implemented a first version of a textarea based on GUIPanel. This component support 
