@@ -3,7 +3,7 @@
 #include <vector>
 /**
 	A component to be used as a container for other components. The main use 
-	for this one is to help the positioning of child components.
+	for this one is to help the positioning of child components. edit
 
 */
 class GUIPanel : public GUIComponent
