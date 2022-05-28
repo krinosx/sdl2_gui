@@ -12,8 +12,8 @@ add_executable(SDL2_GUI_DEMO SDL2_GUI_Demo.cpp)
 target_link_libraries(SDL2_GUI_DEMO ${SDL2_LIBRARIES})
 target_link_libraries(SDL2_GUI_DEMO ${SDL2_TTF_LIBRARY})
 target_link_libraries(SDL2_GUI_DEMO ${SDL2_IMAGE_LIBRARIES})
-
-target_link_libraries(SDL2_GUI_DEMO LIB_SDL2_GUI)
+#Link agains our library
+target_link_libraries(SDL2_GUI_DEMO SDL2_GUIComponents)
 
 
 target_include_directories(SDL2_GUI_DEMO PUBLIC "${CMAKE_BINARY_DIR}/SDL2_GUI")
