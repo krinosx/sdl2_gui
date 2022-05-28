@@ -13,6 +13,11 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#define FONT_LOCATION "/usr/share/fonts/truetype/ubuntu/UbuntuMono-B.ttf"
 #endif
 
 

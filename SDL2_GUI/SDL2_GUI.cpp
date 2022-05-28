@@ -2,20 +2,6 @@
 
 //
 #include <iostream>
-
-#ifdef __APPLE__
-    #include <SDL2/SDL.h>
-    #include <SDL2_image/SDL_image.h>
-    #include <SDL2_ttf/SDL_ttf.h>
-	#define FONT_LOCATION "/Library/Fonts/Arial.ttf"
-#elif defined _WIN32 || _WIN64
-    #include <SDL.h>
-    #include <SDL_ttf.h>
-    #include <SDL_image.h>
-	#define FONT_LOCATION "C:/Windows/Fonts/Arial.ttf"
-#endif
-
-
 #include <memory>
 #include "SDL2_GUI.h"
 
