@@ -38,7 +38,7 @@ void GUITextField::concat(const char * c)
 
 	if ( std::regex_match(c, this->regexFilter) ) 
 	{
-		if (this->label.size() < (size_t)this->maxLenght)
+		if (this->label.size() < (size_t)this->maxLength)
 		{
 			this->label.append(c);
 			this->invalidateRenderState();
@@ -144,7 +144,7 @@ void GUITextField::release(int x, int y)
 /*
 	This component will execute the default action when ENTER(RETURN) is
 	pressed. Other derived components (like a text area) may use this event
-	to introduce some kind of line breaking or other types of controll.
+	to introduce some kind of line breaking or other types of control.
 */
 void GUITextField::returnPressed()
 {
@@ -166,9 +166,9 @@ void GUITextField::stopEditing()
 	this->invalidateRenderState();
 }
 
-void GUITextField::setMaxTextLenght(int maxLenght)
+void GUITextField::setMaxTextLength(int maxLength)
 {
-	this->maxLenght = maxLenght;
+	this->maxLength = maxLength;
 }
 
 void GUITextField::setFilter(const char * regexExpression)

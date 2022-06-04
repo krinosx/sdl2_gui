@@ -169,7 +169,7 @@ int main(int argc, char* argv[])
 	textField->setLabelColor(c_blue);
 	textField->setBackgroundImage(textfieldBg);
 	textField->setBackgroundImageEditing(textfieldEditingBg);
-	textField->setMaxTextLenght(15);
+	textField->setMaxTextLength(15);
 	
 	/*
 	Scrollbar

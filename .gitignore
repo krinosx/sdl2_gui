@@ -5,7 +5,9 @@
 *.suo
 *.user
 *.sln.docstates
-
+*.ninja
+*ninja*
+compile_commands.json
 # Build results
 
 [Dd]ebug/
@@ -96,6 +98,9 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
+# Doxygen
+docs/**
+
 # Click-Once directory
 publish/
 
@@ -162,4 +167,6 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 /SDL2_GUI.VC.VC.opendb
+
+# vscode configs
 .vscode/settings.json

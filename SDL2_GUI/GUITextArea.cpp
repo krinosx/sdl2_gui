@@ -128,7 +128,7 @@ void GUITextArea::draw(SDL_Renderer * renderer)
 }
 
 
-std::vector<std::string> GUITextArea::getTextLinex(std::string text, SDL_Rect bounds, TTF_Font * font)
+std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bounds, TTF_Font * font)
 {
 
 	/*
@@ -214,7 +214,7 @@ int GUITextArea::setText(std::string text)
 	this->invalidateRenderState();
 	this->text = text;
 
-	this->textLines = this->getTextLinex(text, this->rectangle, this->textFont);
+	this->textLines = this->getTextLines(text, this->rectangle, this->textFont);
 
 	return this->textLines.empty() ?  this->textLines.size() : 0;
 	this->invalidateRenderState();

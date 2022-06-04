@@ -80,7 +80,7 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 		std::regex isNumeric("^([+-]?[1-9]\\d*|0)$"); // make it an static member?
 		int myValue = (std::regex_match(text, isNumeric)) ?  std::stoi(text) :  this->getCurrentValue();
 		
-		this->setCurrentvalue(myValue);
+		this->setCurrentValue(myValue);
 		this->editingField->setText(std::to_string(this->getCurrentValue()));
 
 	});
@@ -110,7 +110,7 @@ int GUISpinner::getCurrentValue()
 	return this->currentValue;
 }
 
-void GUISpinner::setCurrentvalue(int value)
+void GUISpinner::setCurrentValue(int value)
 {
 	this->currentValue = value > this->maxValue ? this->maxValue : value < minValue ? this->minValue : value;
 	this->invalidateRenderState();

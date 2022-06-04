@@ -42,7 +42,8 @@ void GUIComponent::draw(SDL_Renderer* renderer)
 		Uint8 r, g, b, a;
 		SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
-		if (this->drawBgColor) {
+		if (this->drawBgColor) 
+		{
 			SDL_SetRenderDrawColor(renderer, this->backgroundColor.r, this->backgroundColor.g, this->backgroundColor.b, this->backgroundColor.a);
 			SDL_RenderFillRect(renderer, &this->rectangle);
 		}
@@ -74,7 +75,8 @@ void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage) {
 }
 
 void GUIComponent::setBackgroundImage(SDL_Texture* backgroundImage, Uint8 alpha) {
-	if (alpha < 255 && alpha >= 0 ) {
+	if (alpha < 255 && alpha >= 0 ) 
+	{
 		SDL_SetTextureBlendMode(backgroundImage, SDL_BLENDMODE_BLEND);
 		SDL_SetTextureAlphaMod(backgroundImage, alpha);
 	}

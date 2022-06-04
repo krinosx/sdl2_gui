@@ -204,7 +204,7 @@ void GUIScrollPanel::setYPace(int paceY)
 	this->paceY = paceY;
 }
 
-void GUIScrollPanel::setXpace(int paceX)
+void GUIScrollPanel::setXPace(int paceX)
 {
 	this->paceX = paceX;
 }

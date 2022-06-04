@@ -24,6 +24,9 @@
 #include <memory>
 #include "SDL2_GUI_Demo.h"
 
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
+
 
 void checkSDLError(int);
 void keyPressed(SDL_Event keyEvent);
@@ -77,7 +80,7 @@ int main(int argc, char* argv[])
 		std::cout << "Unable to init Image Library: " << IMG_GetError() << std::endl;
 	}
 
-	mainWindow = SDL_CreateWindow("SDL2_GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+	mainWindow = SDL_CreateWindow("SDL2_GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if (mainWindow == NULL)
 	{
@@ -112,38 +115,27 @@ int main(int argc, char* argv[])
 	*                Load Images
 	***********************************/
 
-	SDL_Texture * backgroundImage = loadImage("E:\\Projetos\\assets\\Sample_BG.png", sdlRenderer);
-
-	SDL_Texture * textfieldBg = loadImage("E:\\Projetos\\assets\\textfield_bg_border_gray_alpha.png", sdlRenderer);
-
-	SDL_Texture * textfieldEditingBg = loadImage("E:\\Projetos\\assets\\textfield_bg_border_cyan_alpha.png", sdlRenderer);
-
-	SDL_Texture * buttonOffBg = loadImage("E:\\Projetos\\assets\\buttons\\btn_1_off.png", sdlRenderer);
-
-	SDL_Texture * buttonLitBg = loadImage("E:\\Projetos\\assets\\buttons\\btn_1_lit.png", sdlRenderer);
-
-
+	SDL_Texture * backgroundImage = loadImage("../resources/sample_bg_image2.jpg", sdlRenderer);
+	
+	
+	// Using a skin texture
+	SDL_Texture * skinTexture = loadImage("../resources/image_sheet.jpg", sdlRenderer);
 
 	/***********************************
 	*                Load Images
 	***********************************/
-
-
-
 	/*
 	* SDL2_GUI code
 	*/
 
-
-
 	/* Creating some basic color to our components */
-	SDL_Color bg{ 255, 255, 0, 125 };
-	SDL_Color c_red{ 255, 0, 0, 125 };
-	SDL_Color c_green{ 0, 255, 0, 125 };
-	SDL_Color c_blue{ 0, 0, 255, 125 };
-	SDL_Color c_black{ 0, 0, 0, 255 };
-	SDL_Color c_white{ 255, 255, 255, 125 };
-	SDL_Color border{ 255, 0, 255, 125 };
+	SDL_Color bg      { 255, 255,   0, 125 };
+	SDL_Color c_red   { 255,   0,   0, 125 };
+	SDL_Color c_green { 0,   255,   0, 125 };
+	SDL_Color c_blue  { 0,     0, 255, 125 };
+	SDL_Color c_black { 0,     0,   0, 255 };
+	SDL_Color c_white { 255, 255, 255, 125 };
+	SDL_Color border  { 255,   0, 255, 125 };
 
 	/* Main SDL2_GUI object. All components will be childs of GUIManager */
 	GUIManager manager;
@@ -155,9 +147,11 @@ int main(int argc, char* argv[])
 	mainPanel->setOpaque(true);
 	mainPanel->setBackgroundImage(backgroundImage);
 
-	GUIPanel * subPanel = new GUIPanel(75, 85, 685, 395);
+	// Pannel to organize layout
+	GUIPanel * subPanel = new GUIPanel(0, 85, 200, 50);
 	subPanel->setOpaque(true);
-	subPanel->setDrawBgColor(false);
+	subPanel->setBackgroundColor(c_red);
+	subPanel->setDrawBgColor(true);
 
 	GUILabel * testLabel1 = new GUILabel(400, 25, 450, 25, "Simple Ui Label", arial, false);
 	testLabel1->setLabelColor(c_white);
@@ -165,16 +159,18 @@ int main(int argc, char* argv[])
 	testLabel1->setBorderColor(c_white);
 	testLabel1->setAction([] {std::cout << "Clicked in Label" << std::endl; });
 
-	GUIButton * button1 = new GUIButton(10, 30, 34, 34, "", arial, false);
+	GUIButton * button1 = new GUIButton(10, 10, 50, 50, "", arial, false);
 	button1->setClickedColor(c_green);
 	button1->setBackgroundColor(c_blue);
-	button1->setBackgroundImage(buttonOffBg);
-	button1->setClickedImage(buttonLitBg);
+	button1->setBackgroundImage(skinTexture);
+	button1->setBackgroundImageRect(106, 143, 60, 60);
+	button1->setClickedImage(skinTexture);
+	button1->setClickedImageRect(180,143,60,60);
 	button1->setBorderColor(border);
 	//set button action
 	button1->setAction([&] {std::cout << "Btn4 Clicked" << std::endl; });
 
-	GUITextField * textField = new GUITextField(320, 550, 190, 31, "Simple Text Field", arial, false);
+	GUITextField * textField = new GUITextField(320, 550, 180, 56, "Edit me!!", arial, false);
 
 	textField->setIsPassword(false);
 	textField->setAction([&] {
@@ -185,12 +181,15 @@ int main(int argc, char* argv[])
 		std::cout << "Texto Digitado: " << textField->getText() << std::endl;
 	});
 	//textField->setBackgroundColor(c_white);
-	textField->setDrawBgColor(false);
-	textField->setPadding(5, 5, 5, 5);
-	textField->setLabelColor(c_blue);
-	textField->setBackgroundImage(textfieldBg);
-	textField->setBackgroundImageEditing(textfieldEditingBg);
-	textField->setMaxTextLenght(15);
+	textField->setDrawBgColor(true);
+	textField->setBackgroundColor(c_black);
+	textField->setPadding(37, 37, 20, 5);
+	textField->setLabelColor(c_white);
+	textField->setBackgroundImage(skinTexture);
+	textField->setBackgroundImageRect(330, 201, 180, 56);
+	textField->setBackgroundImageEditing(skinTexture);
+	textField->setBackgroundImageEditingRect(330, 201, 180, 56);
+	textField->setMaxTextLength(10);
 
 	/*
 	Scrollbar
@@ -314,17 +313,9 @@ int main(int argc, char* argv[])
 	// Dealocate components
 	manager.destroy();
 
-
-
 	SDL_DestroyTexture(backgroundImage);
+	SDL_DestroyTexture(skinTexture);
 
-	SDL_DestroyTexture(textfieldBg);
-
-	SDL_DestroyTexture(textfieldEditingBg);
-
-	SDL_DestroyTexture(buttonOffBg);
-
-	SDL_DestroyTexture(buttonLitBg);
 	IMG_Quit();
 
 	TTF_CloseFont(arial);

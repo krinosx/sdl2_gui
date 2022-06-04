@@ -64,6 +64,7 @@ SDL_Texture* GUILabel::generateTextTexture(SDL_Renderer * renderer, const char *
 void GUILabel::drawBackground(SDL_Renderer * renderer)
 {
 	this->drawBackground(renderer, this->backgroundColor);
+	this->drawBackgroundImage(renderer, this->backgroundImage, &this->backgroundImageRect);
 }
 
 void GUILabel::drawBackgroundImage( SDL_Renderer * renderer, SDL_Texture * backgroundImage, SDL_Rect *imageRect ) {
@@ -165,8 +166,9 @@ void GUILabel::draw(SDL_Renderer *renderer)
 	/*
 	Draw Order
 		1 - Fill the background with backgroundColor
-		2 - Draw the label
-		3 - Draw the border
+		2 - Draw the background image
+		3 - Draw the label text
+		4 - Draw the borders
 	*/
 	this->drawBackground(renderer);
 
