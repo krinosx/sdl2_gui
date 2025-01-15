@@ -23,20 +23,21 @@ std::vector<std::string> split(const char *str, char c = ' ')
 	return result;
 }
 
-SDL_Surface * drawLineText(SDL_BlendMode mode, TTF_Font * textFont, const char *text, SDL_Color fgColor, SDL_Color bgColor = {0,0,0,255} )
+SDL_Surface * drawLineText(const SDL_BlendMode mode, TTF_Font * textFont, const char *text, const SDL_Color fgColor, SDL_Color bgColor = {0,0,0,255} )
 {
 
 	if (mode == SDL_BLENDMODE_BLEND)
 	{
 		return TTF_RenderText_Blended(textFont, text, fgColor);
-	} 
-	else 
+	}
+	else
 	{
 		return TTF_RenderText_Shaded(textFont, text, fgColor, bgColor);
 	}
 }
 
-SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLines, TTF_Font * font, SDL_Rect bounds, SDL_Renderer * renderer ) {
+SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLines, TTF_Font * font, SDL_Rect bounds, SDL_Renderer * renderer ) const
+{
 
 
 	Uint32 rmask, gmask, bmask, amask;
@@ -56,7 +57,7 @@ SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLine
 
 	// Create the full text area surface
 	SDL_Surface * textAreaSurface = SDL_CreateRGBSurface(0, bounds.w, bounds.h, 32, rmask, gmask, bmask, amask);
-	int totalHeight = textAreaSurface->h;
+	const int totalHeight = textAreaSurface->h;
 
 	SDL_BlendMode blendMode;
 
@@ -66,32 +67,35 @@ SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLine
 		blendMode = SDL_BLENDMODE_BLEND;
 
 		std::cout << "Error getting blend mode?: " << SDL_GetError() << std::endl;
+	} else
+	{
+		std::cout << "Successfully getting blend mode!" << blendMode << std::endl;
 	}
 
 
 	// top position of current drawing line
 	int currentH = this->paddingTop;
 
-	for (std::string line : textLines)
+	for (const std::string& line : textLines)
 	{
 
 		SDL_Surface * lineSurface = drawLineText(blendMode, font, line.c_str(), this->textColor, this->backgroundColor );
 
-		int lineSurfaceW = lineSurface->w;;
+		const int lineSurfaceW = lineSurface->w;;
 		int lineSurfaceH = lineSurface->h;
-		
-		if ( (currentH + lineSurfaceH + this->paddingBottom) < totalHeight) 
+
+		if ( (currentH + lineSurfaceH + this->paddingBottom) < totalHeight)
 		{
 			// only draw if we have space in the textArea, ignore the remaining text
-			
+
 			SDL_Rect src = lineSurface->clip_rect;
 			SDL_Rect dest = { this->paddingLeft, currentH, lineSurfaceW, lineSurfaceH };
 			SDL_BlitSurface(lineSurface, &src, textAreaSurface, &dest);
-						
+
 			currentH += lineSurfaceH;
 			SDL_FreeSurface(lineSurface);
-		} 
-		else 
+		}
+		else
 		{
 			SDL_Surface * overflowSurface = drawLineText(blendMode, font, "(...)", this->textColor, this->backgroundColor);
 			SDL_Rect destOverflow;
@@ -100,7 +104,7 @@ SDL_Texture * GUITextArea::renderTextToTexture(std::vector<std::string> textLine
 			destOverflow.w = overflowSurface->w;
 			destOverflow.h = overflowSurface->h;
 
-			SDL_BlitSurface(overflowSurface, NULL, textAreaSurface, &destOverflow);
+			SDL_BlitSurface(overflowSurface, nullptr, textAreaSurface, &destOverflow);
 			SDL_FreeSurface(overflowSurface);
 		}
 	}
@@ -122,13 +126,13 @@ void GUITextArea::draw(SDL_Renderer * renderer)
 
 	// Draw BGColor and child elements
 	GUIPanel::draw(renderer);
-	SDL_RenderCopy(renderer, this->textTexture, NULL,&this->rectangle);
+	SDL_RenderCopy(renderer, this->textTexture, nullptr,&this->rectangle);
 	this->validateRenderState();
-	
+
 }
 
 
-std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bounds, TTF_Font * font)
+std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bounds, TTF_Font * font) const
 {
 
 	/*
@@ -151,16 +155,16 @@ std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bo
 
 	// The line start considering the padding
 	int currentLineWidth = this->paddingLeft;
-	
+
 	std::string currentLine;
 	currentLine.clear();
-	
-	for (std::string word : tokens)
+
+	for (const std::string& word : tokens)
 	{
 		int wordHeight = 0;
 		int wordWidth = 0;;
 		TTF_SizeText(font, word.c_str(), &wordWidth, &wordHeight);
-		
+
 		//FIXME: How about a single word is bigger than the max size?
 		if ( (currentLineWidth + spaceWidth + wordWidth + this->paddingRight ) > maxLineWidth)
 		{ // Put current line in the array and start a new line with the current word
@@ -169,14 +173,14 @@ std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bo
 			currentLine.push_back('\0');
 			// Check how to copy this values, if needed
 			textLines.push_back(currentLine);
-			
+
 			// start a new line
 			currentLine = std::string();
 			currentLine.append(word);
 			currentLine.push_back(' ');
 			currentLineWidth = this->paddingLeft + wordWidth + spaceWidth;
 		}
-		else 
+		else
 		{ // we still have space
 			currentLine.append(word);
 			currentLine.push_back(' ');
@@ -198,7 +202,7 @@ GUITextArea::GUITextArea(int x, int y, int w, int h, TTF_Font * font)
 	this->setId(std::string("GUITextArea-").append(std::to_string(GUIComponent::compCount)));
 	this->textFont = font;
 	this->invalidateRenderState();
-	
+
 }
 
 GUITextArea::~GUITextArea()

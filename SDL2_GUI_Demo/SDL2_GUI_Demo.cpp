@@ -56,6 +56,16 @@ SDL_Texture * loadImage(const char * path, SDL_Renderer * renderer)
 int main(int argc, char* argv[])
 {
 
+	SDL_version compiled;
+	SDL_version linked;
+	SDL_VERSION(&compiled);
+	SDL_GetVersion(&linked);
+	SDL_Log("SDL LIB - Compiled against SDL version %u.%u.%u ...\n",
+		   compiled.major, compiled.minor, compiled.patch);
+	SDL_Log("and linking against SDL version %u.%u.%u.\n",
+		   linked.major, linked.minor, linked.patch);
+
+
 	bool isAppRunning = true;
 	/*
 	* Initializing SDL components and libraries
@@ -69,6 +79,8 @@ int main(int argc, char* argv[])
 		checkSDLError(__LINE__);
 		exit(-1);
 	}
+
+
 
 	if (TTF_Init() != 0)
 	{
@@ -101,8 +113,8 @@ int main(int argc, char* argv[])
 
 
 	/* Loading default font - Arial */
-	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 18);
-	if (arial == NULL)
+	TTF_Font * arial = TTF_OpenFont(FONT_LOCATION, 24);
+	if (arial == nullptr)
 	{
 		std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 		SDL_DestroyWindow(mainWindow);
@@ -115,9 +127,9 @@ int main(int argc, char* argv[])
 	*                Load Images
 	***********************************/
 
-	SDL_Texture * backgroundImage = loadImage("../resources/sample_bg_image2.jpg", sdlRenderer);
-	
-	
+	SDL_Texture * backgroundImage = loadImage("../resources/sample_bg_image.jpg", sdlRenderer);
+
+
 	// Using a skin texture
 	SDL_Texture * skinTexture = loadImage("../resources/image_sheet.jpg", sdlRenderer);
 
@@ -129,13 +141,18 @@ int main(int argc, char* argv[])
 	*/
 
 	/* Creating some basic color to our components */
-	SDL_Color bg      { 255, 255,   0, 125 };
-	SDL_Color c_red   { 255,   0,   0, 125 };
-	SDL_Color c_green { 0,   255,   0, 125 };
-	SDL_Color c_blue  { 0,     0, 255, 125 };
+	SDL_Color bg      { 255, 255,   0, 255 };
+	SDL_Color c_red   { 255,   0,   0, 255 };
+	SDL_Color c_green { 0,   255,   0, 255 };
+	SDL_Color c_blue  { 0,     0, 255, 255 };
 	SDL_Color c_black { 0,     0,   0, 255 };
-	SDL_Color c_white { 255, 255, 255, 125 };
-	SDL_Color border  { 255,   0, 255, 125 };
+	SDL_Color c_white { 255, 255, 255, 255 };
+	SDL_Color border  { 255,   0, 255, 255 };
+
+
+	SDL_Color c_transparent_green { 0,   255,   0, 255 };
+	SDL_Color bg_solid_white { 255, 255, 255, 255 };
+	SDL_Color bg_transparent_white { 255, 255, 255, 100 };
 
 	/* Main SDL2_GUI object. All components will be childs of GUIManager */
 	GUIManager manager;
@@ -170,7 +187,7 @@ int main(int argc, char* argv[])
 	//set button action
 	button1->setAction([&] {std::cout << "Btn4 Clicked" << std::endl; });
 
-	GUITextField * textField = new GUITextField(320, 550, 180, 56, "Edit me!!", arial, false);
+	GUITextField * textField = new GUITextField(320, 550, 180, 56, "Edit me!", arial, false);
 
 	textField->setIsPassword(false);
 	textField->setAction([&] {
@@ -216,23 +233,22 @@ int main(int argc, char* argv[])
 	/*
 	TextArea
 	*/
-	GUITextArea *textArea = new GUITextArea(0, 0, 600, 500, arial);
+	GUITextArea *textArea = new GUITextArea(0, 0, 800, 600, arial);
 	textArea->setOpaque(false);
 	textArea->setPadding(0, 15, 0, 0);
 	textArea->setText("Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo. Neste sentido, o entendimento das metas propostas maximiza as possibilidades por conta das formas de ação. A prática cotidiana prova que a crescente influência da mídia auxilia a preparação e a composição do sistema de participação geral. No entanto, não podemos esquecer que a consolidação das estruturas auxilia a preparação e a composição do processo de comunicação como um todo.");
-	textArea->setTextColor(c_white);
+	textArea->setTextColor(c_green);
+	textArea->setBackgroundColor(bg_transparent_white);
 	textArea->setDrawBgColor(false);
 
 
 	/*
 		Scrollpanel
 	*/
-	GUIScrollPanel * scrollPannel = new GUIScrollPanel(164, 200, 600, 200, arial);
+	GUIScrollPanel * scrollPannel = new GUIScrollPanel(164, 200, 800, 200, arial);
 	scrollPannel->setYPace(21);
 	scrollPannel->addComponent(textArea);
-	
-	//scrollPannel->setDrawBgColor(true);
-
+	scrollPannel->setDrawBgColor(false);
 	//scrollPannel->addComponent(textField);
 	// Add fields to layout
 

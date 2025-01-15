@@ -21,7 +21,7 @@ private:
 	int lineSpacing = 0; /**< Distance between lines */
 	
 	std::vector<std::string> textLines; /**< once computed the line breaking points, separated lines will be stored in the vector for fast drawing */
-	std::vector<std::string> getTextLines(std::string text, SDL_Rect bounds, TTF_Font * font); /**< return the vector with pre computed lines s*/
+	std::vector<std::string> getTextLines(std::string text, SDL_Rect bounds, TTF_Font * font) const; /**< return the vector with pre computed lines s*/
 	/**
 	 * @brief Based on line vector, draw the text to a internal texture/image
 	 * 
@@ -31,7 +31,7 @@ private:
 	 * @param renderer SDL_Renderer managing the scene
 	 * @return SDL_Texture* a texture pointer to a image with the text drawn
 	 */
-	SDL_Texture * renderTextToTexture(std::vector<std::string> textLines, TTF_Font * font, SDL_Rect bounds, SDL_Renderer * renderer );
+	SDL_Texture * renderTextToTexture(std::vector<std::string> textLines, TTF_Font * font, SDL_Rect bounds, SDL_Renderer * renderer ) const;
 
 public:
 	/**

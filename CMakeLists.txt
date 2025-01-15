@@ -1,7 +1,7 @@
-#Define the main project name
-project(SDL2_GUI)
 #define CMAKE version
 cmake_minimum_required(VERSION 3.10)
+#Define the main project name
+project(SDL2_GUI)
 # Use to output all compiler commands
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -9,7 +9,13 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmakemodules/")
 
 #Find SDL2 libraries
-find_package(SDL2 REQUIRED)
+# following steps found here: https://wiki.libsdl.org/SDL2/README/cmake to add SDL2 to CMake
+find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
+# 1. Look for a SDL2 package, 2. Look for the SDL2maincomponent
+find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
+
+
+
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
