@@ -1,19 +1,14 @@
 #include "GUISpinner.h"
 
 
-
 void GUISpinner::increment()
 {
-	this->currentValue = (this->currentValue + this->pace) > this->maxValue ? this->maxValue : (this->currentValue + this->pace);
-	this->editingField->setText(std::to_string(this->currentValue));
-	this->invalidateRenderState();
+	this->setCurrentValue((this->currentValue + this->pace) > this->maxValue ? this->maxValue : (this->currentValue + this->pace));
 }
 
 void GUISpinner::decrement()
 {
-	this->currentValue = (this->currentValue - this->pace) < this->minValue ? this->minValue : (this->currentValue - this->pace);
-	this->editingField->setText(std::to_string(this->currentValue));
-	this->invalidateRenderState();
+	this->setCurrentValue( (this->currentValue - this->pace) < this->minValue ? this->minValue : (this->currentValue - this->pace));
 }
 
 GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue, int maxValue)
@@ -28,12 +23,12 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 
 	int maxTextFieldWidth = 0;
 	int maxTextFieldHeight = 0;
-	
+
 	TTF_SizeText(font, std::to_string(this->maxValue).c_str(), &maxTextFieldWidth, &maxTextFieldHeight);
 
 	int textFieldWidth = minTextFieldWidth < maxTextFieldWidth ? maxTextFieldWidth : minTextFieldWidth;
 	int textFieldHeight = minTextFieldHeight < maxTextFieldHeight ? maxTextFieldHeight : minTextFieldHeight;
-	
+
 	// scrollbar is based on horizontal alight
 	int minScrollBarHeight = GUIScrollbar::MIN_BAR_WIDTH;
 	int minScrollBarWidth = GUIScrollbar::MIN_BAR_HEIGHT;
@@ -48,7 +43,7 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 	if (this->rectangle.w < totalSpinnerWidth) {
 		this->rectangle.w = totalSpinnerWidth;
 	}
-	
+
 	//Scrollbars will be always Vertical, with mininum width
 	this->scrollbar = new GUIScrollbar(( this->rectangle.w - minScrollBarWidth ) , 0, this->rectangle.h, minScrollBarWidth, font, GUIScrollbar::ALIGN_VERTICAL);
 
@@ -74,12 +69,12 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 	});
 
 	this->editingField->setReturnPressedAction([&]() {
-		
+
 		std::string text = this->editingField->getText();
 
-		std::regex isNumeric("^([+-]?[1-9]\\d*|0)$"); // make it an static member?
-		int myValue = (std::regex_match(text, isNumeric)) ?  std::stoi(text) :  this->getCurrentValue();
-		
+		const std::regex isNumeric("^([+-]?[1-9]\\d*|0)$"); // make it a static member?
+		const int myValue = (std::regex_match(text, isNumeric)) ?  std::stoi(text) :  this->getCurrentValue();
+
 		this->setCurrentValue(myValue);
 		this->editingField->setText(std::to_string(this->getCurrentValue()));
 
@@ -102,23 +97,24 @@ GUISpinner::GUISpinner(int x, int y, int w, int h, TTF_Font * font, int minValue
 GUISpinner::~GUISpinner()
 {
 	// Components instantiated here will be deleted by GUIContainer destructor
-	
+
 }
 
-int GUISpinner::getCurrentValue()
+int GUISpinner::getCurrentValue() const
 {
 	return this->currentValue;
+
 }
 
 void GUISpinner::setCurrentValue(int value)
 {
 	this->currentValue = value > this->maxValue ? this->maxValue : value < minValue ? this->minValue : value;
+	this->editingField->setText(std::to_string(this->currentValue));
 	this->invalidateRenderState();
 }
 
 void GUISpinner::draw(SDL_Renderer * renderer)
 {
-
 	GUIPanel::draw(renderer);
 	this->validateRenderState();
 }

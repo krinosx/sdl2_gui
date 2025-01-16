@@ -49,7 +49,7 @@ public:
 	 *
 	 * @return int 
 	 */
-	int getCurrentValue();
+	int getCurrentValue() const;
 	/**
 	 * @brief Set the current value for the component
 	 * 

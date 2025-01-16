@@ -138,8 +138,7 @@ std::vector<std::string> GUITextArea::getTextLines(std::string text, SDL_Rect bo
 	/*
 		Tokenize the string to get separated words, in order to be presented
 	*/
-	std::vector<std::string> tokens;
-	tokens = split(text.c_str(), ' ');
+	std::vector<std::string> tokens = split(text.c_str(), ' ');
 
 	// Get font size information
 	int fontHeight = TTF_FontHeight(font);
@@ -219,9 +218,8 @@ int GUITextArea::setText(std::string text)
 	this->text = text;
 
 	this->textLines = this->getTextLines(text, this->rectangle, this->textFont);
-
 	return this->textLines.empty() ?  this->textLines.size() : 0;
-	this->invalidateRenderState();
+
 }
 
 void GUITextArea::setTextColor(SDL_Color color)
